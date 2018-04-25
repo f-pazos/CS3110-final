@@ -1,7 +1,6 @@
-(* [generate_state size attitude scarceness] Creates a new world based off of the parameters
-   given. [size] determines how many tribes there are, [attitude] is a measure of how 
-   aggressive or generous tribes will be, and [scarceness] is a measure of how limited
-   resources are in the world. 
+(* [generate_state size attitude scarceness] Creates a new world based off of
+ * the parameters given. [size] determines how many tribes there are, [attitude] * is a measure of how aggressive orl generous tribes will be, and [scarceness]
+ * is a measure of how limited resources are in the world. 
 *)
 val generate_state : int -> int -> int -> state 
 
