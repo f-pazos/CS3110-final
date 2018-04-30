@@ -1,3 +1,5 @@
+open List
+
 type region = {
 	name : string;
 	area : int;
@@ -17,7 +19,7 @@ type tribe = {
 }
 type state = {
 	regions : region list;
-	tribes : tribe list;
+	tribes : (string * tribe) list;
 }
 
 (* Has the name of the resource given, the quantity, and the target of the
@@ -38,6 +40,8 @@ let decide s t =
 let do_action s t a =
 	match a with
 	| Food -> 
+		let t' = {t with food = (t.food + (t.pop * 4))}
+		let tribes' = (t.name, t')::(remove_assoc t.name s.tribes)
 	| Tools -> 
 	| Weapons -> 
 	| Attack(s) -> 
