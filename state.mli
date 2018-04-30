@@ -7,7 +7,7 @@ type region = {
 
 type tribe = {
 	name : string;
-	population : int;
+	pop : int;
 	food : int;
 	tools : int;
 	weapons : int;
