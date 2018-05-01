@@ -25,20 +25,21 @@ type state = {
 (* The string in Attack is the target *)
 type action = Food | Tools | Weapons | Attack of string | Gift of (string * int)
 
-(* [decide s t] is that action that tribe [t] will do, given the state [s] of 
- * the simulation. Contains helper functions that determine the benefit of the
- * different actions. The action the results is that which has the highest
- * benefit to the tribe *)
-val decide : state -> tribe -> action
+(* [decide s name] is the [action] that tribe with name [name] will do, given the
+ * state [s] of the simulation. The action the results is that which has the highest
+ * "desireability" to the tribe
+ * Raises not_found if [name] is not associated with both a tribe and region in s *)
+val decide : state -> string -> action
 
-(* [do_action s t a] returns the new state after tribe [t] has done action
- * [a] on state [s] *)
-val do_action : state -> tribe -> action -> state
+(* [do_action s name a] returns the new state after tribe with name [name] has done action
+ * [a] on state [s]
+ * Raises not_found if [name] is not associated with both a tribe and region in s *)
+val do_action : state -> string -> action -> state
 
 (* [metabolize t] is the tribe [t] after the application of its metabolism
- * functions for one step. Metabolism functions affect the quantity of 
+ * functions for one step. Metabolism functions affect the quantity of
  * population and resources independently of any tribes' actions.
- * e.g. population will either grow or shrink depending on the available 
+ * e.g. population will either grow or shrink depending on the available
  * food. *)
 val metabolize : tribe -> tribe
 
