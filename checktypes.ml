@@ -64,8 +64,8 @@ module type STATE = sig
 
   type action = Food | Tools | Weapons | Attack of string | Gift of (string * int)
 
-  val decide : state -> tribe -> action
-  val do_action : state -> tribe -> action -> state
+  val decide : state -> string -> action
+  val do_action : state -> string -> action -> state
   val metabolize : tribe -> tribe
   (*TODO*)
   (* val step : state -> int -> state *)

@@ -46,28 +46,33 @@ let rec max_opin o i =
   | [] -> i
   | (tr,op)::t -> if op > i then max_opin t op else max_opin t i
 
-(* [max l] is the maximum int of list [l] and base [i] *)
-let rec max (l: int list) i =
+(* [list_max l] is the maximum int of list [l] and base [i] *)
+let rec list_max (l: int list) i =
   match l with
   | [] -> i
-  | h::t -> if h > i then max l h else max l i
+  | h::t -> if h > i then list_max l h else list_max l i
 
 (* [most_hated o] returns the string name associated with the lowest int
- * in [o] *)
+ * in [o]
+ * Raises not_found if o is empty *)
 let most_hated o =
-  fst (find (fun x -> snd x = (min_opin o 100)))
+  fst (find (fun x -> snd x = (min_opin o 100)) o)
 
 (* [most_liked o] returns the string name associated with the highest int
- * in [o] *)
+ * in [o]
+ * Raises not_found if o is empty *)
 let most_liked o =
-  fst (find (fun x -> snd x = (max_opin o -100)))
+  fst (find (fun x -> snd x = (max_opin o (-100))) o)
 
-(* [decide s t] is the [action] that tribe [t] will do, given the state [s] of
+(* [decide s name] is the [action] that tribe with name [name] will do, given the state [s] of
  * the simulation. The action the results is that which has the highest
  * "desireability" to the tribe *)
-let decide s t =
+let decide s name =
+  let t = assoc name s.tribes in
+  let r = assoc name s.regions in
   let food_des =
-    (t.pop/t.food) * (if t.food < t.pop then 2 else 1) * climate
+    let food_mult = if t.food < t.pop then 2 else 1 in
+    truncate (float ((t.pop/t.food) * (food_mult)) *. r.climate)
   in
   let tools_des =
     if t.tools > t.pop then 0
@@ -83,11 +88,11 @@ let decide s t =
       (abs (lowest)) * (if t.attd = Agressive then 2 else 1)
   in
   let gift_des =
-    let highest = max_opin t.opins -100 in
+    let highest = max_opin t.opins (-100) in
     if highest < 0 then 0 else
       highest * (if t.attd = Generous then 2 else 1)
   in
-  let most = max (food_des::tools_des::weps_des::attack_des::[]) gift_des in
+  let most = list_max (food_des::tools_des::weps_des::attack_des::[]) gift_des in
   if most = food_des then
     Food
   else if most = tools_des then
@@ -99,19 +104,28 @@ let decide s t =
   else
     Gift((most_liked t.opins),50) (* 50 is a placeholder here *)
 
-let do_food s t popwtools =
-  let f = t.food + ((3 * t.pop) + (6 * popwtools)) * climate in
-  let food' = min f t.area in
+(* [do_food s t r popwtools] is [do_action s name Food] where tribe with name
+ * [name] is [t] and occupies region [r]
+ * popwtools is max(t.pop, t.tools)*)
+let do_food s t r popwtools =
+  let f = truncate (float (t.food + ((3 * t.pop) + (6 * popwtools))) *. r.climate) in
+  let food' = min f r.area in
   let tools' = t.tools - (popwtools/4) in
   let t' = {t with food = food'; tools = tools'} in
   let tribes' = (t.name, t')::(remove_assoc t.name s.tribes) in
   {s with tribes = tribes'}
 
+(* [do_tools s t popwtools] is [do_action s name Tools] where tribe with name
+ * [name] is [t]
+ * popwtools is max(t.pop, t.tools)*)
 let do_tools s t popwtools =
   let t' = {t with tools = (t.tools + (t.pop/2))} in
   let tribes' = (t.name, t')::(remove_assoc t.name s.tribes) in
   {s with tribes = tribes'}
 
+(* [do_weapons s t popwtools] is [do_action s name Weapons] where tribe with name
+ * [name] is [t]
+ * popwtools is max(t.pop, t.tools)*)
 let do_weapons s t popwtools =
   let weps' = t.weps + (popwtools/2) in
   let tools' = t.tools - (popwtools/3) in
@@ -119,37 +133,44 @@ let do_weapons s t popwtools =
   let tribes' = (t.name, t')::(remove_assoc t.name s.tribes) in
   {s with tribes = tribes'}
 
-let do_attack s t popwtools name =
-  let x = mem_assoc name s.tribes in
+(* [do_attack is t popwtools a_name] is [do_action s name (Attack a_name)] where tribe with name
+ * [name] is [t]
+ * popwtools is max(t.pop, t.tools)*)
+let do_attack s t popwtools a_name =
+  let x = assoc a_name s.tribes in
   let t_popwithweps = min t.pop t.weps in
   let x_popwithweps = min x.pop x.weps in
   let tforce = t.pop + t_popwithweps in
   let xforce = x.pop + x_popwithweps in
   let t_success =
-    ((t.pop + t_popwithweps)/(x.pop + x_popwithweps)) *
-      (((Random.int 80) + 70)/150.) - 0.15 in
-  let x_success = (1/t_success) in
-  let xpop' = x.pop - tforce * t_success in
-  let tpop' = t.pop - xforce * x_success in
-  let food_stolen = min x.food (t.pop * t_success) in
+    (float(t.pop + t_popwithweps)/. float(x.pop + x_popwithweps)) *.
+      (float((Random.int 80) + 70)/.150.) -. 0.15 in
+  let x_success = (1./.t_success) in
+  let xpop' = truncate (float(x.pop) -. float(tforce) *. t_success) in
+  let tpop' = truncate (float(t.pop) -. float(xforce) *. x_success) in
+  let food_stolen = min x.food (truncate(float(t.pop) *. t_success)) in
   let tfood' = t.food + food_stolen in
   let xfood' = x.food - food_stolen in
   let xopins' =
-    (t.name,((mem_assoc t.name x.opins) - 5))::(remove_assoc t.name x.opins)
+    (t.name,((assoc t.name x.opins) - 5))::(remove_assoc t.name x.opins)
   in
   let xweps' = x.weps/2 in
   let tweps' = t.weps/2 in
   let x' =
-    {x with pop = xpop'; food = xfood'; opins = xopins; weps = xweps'} in
+    {x with pop = xpop'; food = xfood'; opins = xopins'; weps = xweps'} in
   let t' = {t with pop = tpop'; food = tfood'; weps = tweps'} in
   let tribes' = (t.name, t')::(remove_assoc t.name s.tribes) in
   let tribes'' = (x.name, x')::(remove_assoc x.name tribes') in
   {s with tribes = tribes''}
 
-let do_gift s t popwtools x i =
-  let x = mem_assoc s.tribes in
+(* [do_gift s t popwtools n i] is [do_action s name (Gift (n,i))] where tribe with name
+ * [name] is [t]
+ * popwtools is max(t.pop, t.tools)*)
+let do_gift s t popwtools n (i:int) =
+  let x = assoc n s.tribes in
+  let add_factor = max 1 (i/5) in
   let newopin =
-    (t.name,((mem_assoc t.name x.opins) + (max 1 i/5))) in
+    (t.name, (assoc t.name x.opins) + add_factor ) in
   let xopins' = newopin::(remove_assoc t.name x.opins) in
   let x' = {x with food = (x.food + i); opins = xopins'} in
   let t' = {t with food = (t.food - i)} in
@@ -157,7 +178,7 @@ let do_gift s t popwtools x i =
   let tribes'' = (x.name, x')::(remove_assoc x.name tribes') in
   {s with tribes = tribes''}
 
-(* [do_action s t a] returns the [state] after tribe [t] has done action
+(* [do_action s t a] returns the [state] after tribe with name [name] has done action
  * [a] on state [s]
  * For a = :
  * - Food: Generates 3 food for every tribe member + 6 for each member with a
@@ -178,13 +199,15 @@ let do_gift s t popwtools x i =
  * food increases by the quantity of the gift. The target's opinion of the actor
  * increases by 1 for every item of food given, with a base of 1
  *)
-let do_action s t a =
+let do_action s name a =
+  let t = assoc name s.tribes in
+  let r = assoc name s.regions in
   let popwtools = if t.tools > t.pop then t.pop else t.tools in
   match a with
-  | Food -> do_food s t popwtools
+  | Food -> do_food s t r popwtools
   | Tools -> do_tools s t popwtools
   | Weapons -> do_weapons s t popwtools
-  | Attack(name) -> do_attack s t popwtools name
+  | Attack(a_name) -> do_attack s t popwtools a_name
   | Gift(x, i) -> do_gift s t popwtools x i
 
 
