@@ -47,7 +47,7 @@ let rec max_opin o i =
   | (tr,op)::t -> if op > i then max_opin t op else max_opin t i
 
 (* [max l] is the maximum int of list [l] and base [i] *)
-let rec max l:(int list) i =
+let rec max (l: int list) i =
   match l with
   | [] -> i
   | h::t -> if h > i then max l h else max l i
@@ -101,8 +101,8 @@ let decide s t =
 
 let do_food s t popwtools =
   let f = t.food + ((3 * t.pop) + (6 * popwtools)) * climate in
-  let food' = min f t.area
-  let tools' = t.tools - (popwtools/4)
+  let food' = min f t.area in
+  let tools' = t.tools - (popwtools/4) in
   let t' = {t with food = food'; tools = tools'} in
   let tribes' = (t.name, t')::(remove_assoc t.name s.tribes) in
   {s with tribes = tribes'}
@@ -212,3 +212,5 @@ let metabolize t:tribe =
     else t.pop + ((t.food - t.pop) / 3)
   in
   {t with pop = pop'; food = food'}
+
+let step = failwith "Unimplemented"
