@@ -1,9 +1,10 @@
 open List
 
 (* - higher climate = more fertile land 
- * - float in neighbors related to the intensity of interactions, [0.8..1.8]
  * - area in [500..1000] 
- * - climate in [0.8..1.8] *)
+ * - climate in [0.8..1.8] 
+ * - float in neighbors related to the intensity of interactions, [0.8..1.8]
+ *)
 type region = {
   name : string;
   area : int;
@@ -24,25 +25,86 @@ type tribe = {
   reg : string;
 }
 type state = {
-  regions : region list;
+  regions : (string * region) list;
   tribes : (string * tribe) list;
 }
 
 (* The string in Attack is the target *)
 type action = Food | Tools | Weapons | Attack of string | Gift of (string * int)
 
+(* [min_opin o] is the lowest int opinion of the opins list [o] or the base 
+ * int [i] *)
+let rec min_opin o i = 
+  match o with
+  | [] -> i
+  | (tr,op)::t -> if op < i then min_opin t op else min_opin t i
+
+(* [max_opin o] is the highest int opinion of the opins list [o] or the base 
+ * int [i] *)
+let rec max_opin o i = 
+  match o with
+  | [] -> i
+  | (tr,op)::t -> if op > i then max_opin t op else max_opin t i
+
+(* [max l] is the maximum int of list [l] and base [i] *)
+let rec max l:(int list) i = 
+  match l with
+  | [] -> i
+  | h::t -> if h > i then max l h else max l i
+
+(* [most_hated o] returns the string name associated with the lowest int 
+ * in [o] *)
+let most_hated o =
+  fst (find (fun x -> snd x = (min_opin o 100)))
+
+(* [most_liked o] returns the string name associated with the highest int 
+ * in [o] *)
+let most_liked o =
+  fst (find (fun x -> snd x = (max_opin o -100)))
+
 (* [decide s t] is the [action] that tribe [t] will do, given the state [s] of 
  * the simulation. The action the results is that which has the highest
- * desireability to the tribe *)
+ * "desireability" to the tribe *)
 let decide s t =
   let food_des =
-    let surplus = t.food - t.pop
+    (t.pop/t.food) * (if t.food < t.pop then 2 else 1) * climate
   in
+  let tools_des =
+    if t.tools > t.pop then 0
+    else t.pop/t.tools
+  in
+  let weps_des =
+    if t.weps > t.pop then 0
+    else ((t.pop/t.weps)/2) * (if t.attd = Agressive then 2 else 1)
+  in
+  let attack_des =
+    let lowest = min_opin t.opins 100 in
+    if lowest > 0 then 0 else
+      (abs (lowest)) * (if t.attd = Agressive then 2 else 1)
+  in
+  let gift_des =
+    let highest = max_opin t.opins -100 in
+    if highest < 0 then 0 else
+      highest * (if t.attd = Generous then 2 else 1)
+  in 
+  let most = max (food_des::tools_des::weps_des::attack_des::[]) gift_des in
+  if most = food_des then
+    Food
+  else if most = tools_des then
+    Tools
+  else if most = weps_des then
+    Weapons
+  else if most = attack_des then
+    Attack(most_hated t.opins)
+  else
+    Gift((most_liked t.opins),50) (* 50 is a placeholder here *)
 
-(* [do_action s t a] returns the new state after tribe [t] has done action
- * [a] on state [s] 
+(* [do_action s t a] returns the [state] after tribe [t] has done action
+ * [a] on state [s]
+ * For a = :
  * - Food: Generates 3 food for every tribe member + 6 for each member with a
- * tool, multiplied by the climate. 1 out of every 4 tools used breaks.
+ * tool, multiplied by the climate. 1 out of every 4 tools used breaks. The
+ * maximum food output is equal to the area.
  * - Tools: Generates 1 tool for every 2 tribe members
  * - Weapons: Generates 1 weapon for every 2 tribe members with tools. 1 out 
  * of every 3 tools used breaks.
@@ -96,11 +158,11 @@ let do_action s t a =
     let xopins' = 
       (t.name,((mem_assoc t.name x.opins) - 5))::(remove_assoc t.name x.opins)
     in
-    let xweps' = x.weps/2
-    let tweps' = t.weps/2
+    let xweps' = x.weps/2 in
+    let tweps' = t.weps/2 in
     let x' = 
-      {x with pop = xpop'; food = xfood'; opins = xopins; weps = xweps'}
-    let t' = {t with pop = tpop'; food = tfood'; weps = tweps'}
+      {x with pop = xpop'; food = xfood'; opins = xopins; weps = xweps'} in
+    let t' = {t with pop = tpop'; food = tfood'; weps = tweps'} in
     let tribes' = (t.name, t')::(remove_assoc t.name s.tribes) in
     let tribes'' = (x.name, x')::(remove_assoc x.name tribes') in
     {s with tribes = tribes''}
