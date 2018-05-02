@@ -45,7 +45,7 @@ module type STATE = sig
     neighbors : (string * float) list;
   }
 
-  type attd = Generous | Neutral | Agressive
+  type attd = Generous | Neutral | Aggressive
 
   type tribe = {
     name : string;

@@ -5,7 +5,7 @@ type region = {
   neighbors : (string * float) list;
 }
 
-type attd = Generous | Neutral | Agressive
+type attd = Generous | Neutral | Aggressive
 
 type tribe = {
   name : string;
