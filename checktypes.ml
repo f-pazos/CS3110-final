@@ -67,8 +67,7 @@ module type STATE = sig
   val decide : state -> string -> action
   val do_action : state -> string -> action -> state
   val metabolize : tribe -> tribe
-  (*TODO*)
-  (* val step : state -> int -> state *)
+  val step : state -> int -> state
 
 end (*state*)
 
