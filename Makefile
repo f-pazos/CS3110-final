@@ -6,3 +6,6 @@ check:
 
 clean:
 	ocamlbuild -clean
+
+zip:
+	zip finalsrc.zip *.ml*
