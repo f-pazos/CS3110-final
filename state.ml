@@ -12,7 +12,7 @@ type region = {
   neighbors : (string * float) list;
 }
 
-type attd = Generous | Neutral | Agressive
+type attd = Generous | Neutral | Aggressive
 
 type tribe = {
   name : string;
@@ -80,12 +80,12 @@ let decide s name =
   in
   let weps_des =
     if t.weps > t.pop then 0
-    else ((t.pop/t.weps)/2) * (if t.attd = Agressive then 2 else 1)
+    else ((t.pop/t.weps)/2) * (if t.attd = Aggressive then 2 else 1)
   in
   let attack_des =
     let lowest = min_opin t.opins 100 in
     if lowest > 0 then 0 else
-      (abs (lowest)) * (if t.attd = Agressive then 2 else 1)
+      (abs (lowest)) * (if t.attd = Aggressive then 2 else 1)
   in
   let gift_des =
     let highest = max_opin t.opins (-100) in
@@ -236,4 +236,28 @@ let metabolize t:tribe =
   in
   {t with pop = pop'; food = food'}
 
-let step = failwith "Unimplemented"
+(* [do_all s trs] is the state after all the tribes in [trs] have acted once
+ * on state [s] *)
+let rec do_all s trs = 
+    match trs with
+    | [] -> s
+    | (id,tr)::tl -> do_all (do_action s id (decide s id) ) tl
+
+(* [do_all s trs] is the state after all the tribes in [trs] have
+ * metabolized once, starting from state [s] *)
+let rec metbl_all s trs =
+  match trs with
+  | [] -> s
+  | (id,t)::tl ->
+    let t' = metabolize t in
+    metbl_all ({s with tribes = (id, t')::(remove_assoc id s.tribes)}) tl
+
+(* [step s i] is the state [s] after [i] steps. On each step, each tribe
+ * performs one action and after every tribe acts, each tribe metabolizes *)
+let rec step s i = 
+  if i = 0
+    then s
+  else
+    let done_all = do_all s s.tribes in
+    let met_all = metbl_all done_all done_all.tribes in
+    step met_all (i - 1)
