@@ -8,7 +8,7 @@ module type DISPLAY = sig
   type state = string
 
   type map_region = {
-    polygon : (int * int) array;
+    polygons : (int * int) array array;
     color : int;
 
     name : string;

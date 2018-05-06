@@ -1,13 +1,13 @@
 open Graphics
 
-let width = 500
-let height = 600
+let width = 1920
+let height = 1080
 
 type state = string
 
 type map_region = {
   (* Fields relevant for drawing. *)
-  polygon : (int * int) array;
+  polygons : (int * int) array array;
   color : int;
 
   (* Fields providing info to the region. *)
@@ -30,7 +30,9 @@ let rec display_world w =
   match w with 
   | r::t -> 
     set_color r.color;
-    fill_poly r.polygon;
+    for i = 0 to (Array.length r.polygons)-1 do
+      fill_poly r.polygons.(i)
+    done;
     display_world t
 
   | [] -> ()
