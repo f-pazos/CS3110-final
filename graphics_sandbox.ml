@@ -6,7 +6,7 @@ open Display
 
 let random_color () = Random.int 0xFFFFFF
 
-let lat_size = 50
+let lat_size = 49
 
 (* [gen_lattice w h size] Generates a starting triangle grid. *)
 let gen_lattice w h size =  
@@ -97,98 +97,249 @@ let generate_tmesh w h n =
   gen_tmesh w h n [] init
 
 
+(* Here is a type representing the side of a polygon.
+ * AF: A side (p0, p1) represents the side of a polygon with points at p0 and p1. 
+ * RI: None. A side may be given with either point first. They would still be the 
+ * same side. *)
+type side = ( (int*int) * (int*int) ) 
 
-(* [adj_ts t1 t2] returns true if t1 and t2 share exactly one side. Returns
- * false if they are the same triangle. *)
-let adj_ts t1 t2 = 
+(* Here is a type representing a region, which is basically just the outline of a 
+ * polygon. 
+ *
+ * AF: For a given polygon [|p0, p1, ..., pn|], its region is an array of all the edges 
+ * in the polygon in order - that is, 
+ * [| s0, s1, ..., sn |].
+ *
+ * RI: The relative order of the edges is always maintained. Further, the array wraps around -
+ * that is - the last side connects to the first side. *)
+type region = side array 
 
-  (* Helper function to sort point arrays consistently. *)
-  let f = (fun (x1, y1) (x2, y2) -> 
-      if x1 > x2 then 1 else 
-      if x2 > x1 then -1 else 
-      if y1 > y2 then 1 else
-      if y2 > y1 then -1 else 0) in 
+(* [reg_to_poly reg] Creates a polygon from the region reg. We have to be careful to make
+ * sure we don't double/skip point when merging since the order of the points in the sides
+ * isn't guaranteed. 
+ *      Precondition: reg has length over 2. *)
+let rec reg_to_poly reg =
 
-  Array.sort f t1;
-  Array.sort f t2; 
+  (* We want to make sure we start with the point that is in both the first and second
+   * side of [reg]. *)
+  let (pa, pb) = reg.(0) in 
+  let (pc, pd) = reg.(1) in 
+  let starter = if pa=pc || pa=pd then pa else pb in 
 
-  (* If same triangle, false. *)
-  if t1 = t2 then false else 
+  (* Initialize array *)
+  let new_poly = Array.make (Array.length reg) starter in 
 
-  (* Check to see if any two points from t1 are in t2. *)
-  (Array.mem t1.(0) t2 && Array.mem t1.(1) t2)||
-  (Array.mem t1.(0) t2 && Array.mem t1.(2) t2)||
-  (Array.mem t1.(1) t2 && Array.mem t1.(2) t2)
+  for i = 1 to (Array.length reg) - 1 do
+    let (px,py) = reg.(i) in 
+    let next_point = if px=new_poly.(i-1) then py else px in 
 
-(* [adj_tlist t ts] returns true if t is not in ts and t is adjacent to at
- * to at least one triangle in ts. *)
-let rec adj_tlist t ts = 
-  Array.exists (fun x -> adj_ts t x) ts
+    new_poly.(i) <- next_point
+  done;
+  new_poly
 
-(* [adj_reg r1 r2] Returns true if r1 and r2 are adjacent regions. *)
-let rec adj_reg r1 r2 =
-  Array.exists (fun x -> adj_tlist x r2) r1
+let print_reg name reg = 
+  print_string (name ^ ": [|");
+  for i = 0 to (Array.length reg)-1 do 
+    print_string "( (";
+    print_string (string_of_int (i |> Array.get reg |> fst |> fst) ^ ", "); 
+    print_string (string_of_int (i |> Array.get reg |> fst |> snd) ^ "), (");
+    print_string (string_of_int (i |> Array.get reg |> snd |> fst) ^ ", ");
+    print_string (string_of_int (i |> Array.get reg |> snd |> snd) ^ ")); ")
+  done;
 
-(*
+  print_string "|]";
+  print_endline ""
+
+let print_poly name poly = 
+  print_string (name ^ ": [|");
+  for i = 0 to (Array.length poly)-1 do 
+    print_string "(";
+    print_string (string_of_int (i|> Array.get poly |> fst) ^ ", ");
+    print_string (string_of_int (i|> Array.get poly |> snd) ^ "), ");
+  done;
+
+  print_string "|]";
+  print_endline ""
+
+
+(* [adj_sides s1 s2] Returns true if s1 and s2 are adjacent sides - that is, they share
+ * a point. *)
+let adj_sides (p1, p2)  (p3, p4)  = 
+  p1=p3 || p1=p4 || p2=p3 || p2=p4
+
+
+(* [in_reg s r] Returns true if side [s] is found within region [r] *)
+let in_reg ( (p0, p1):side) (r:region) = 
+  (* The side might be given with either points first. *)
+  Array.mem (p0, p1) r || Array.mem (p1, p0) r 
+
+
+(* [adj_regs r1 r2] Returns true if r1 and r2 are adjacent regions - that is, they share
+ * at least one edge. 
+ * NOTE: This means that two identical regions are considered adjacent.  *)
+let adj_regs r1 r2 = 
+
+  (* [Returns true if a side in [sides] is found in region [reg] *)
+  let rec contains sides reg i =
+    if i >= (Array.length sides) then false else
+
+    let (p0, p1) = sides.(i) in 
+
+    if Array.mem (p0,p1) reg || Array.mem (p1,p0) reg then true
+    else contains sides reg (i+1) in 
+
+
+  contains r1 r2 0 || contains r2 r1 0 
+
 
 (* [merge r1 r2] Returns a new region that is the merger of regions r1 and r2. 
- * If r1 = r2, then simply returns r1. *)
+ * If r1 = r2, then simply returns r1. 
+ * Precondition: r1 and r2 are adjacent regions - that is, they share at least one side. *)
 let rec merge r1 r2 =
-  (* Create a hash table. *)
-  let tbl = Hashtbl.create (max (Array.length r1) (Array.length r2) ) in 
+  (* Create a list to hold all the sides.  *)
+  let all_sides = ref [] in 
+
+  (*print_reg "r1" r1;  
+  print_poly "r1_p" (reg_to_poly r1);
+
+  print_reg "r2" r2;
+  print_poly "r2_p" (reg_to_poly r2);*)
 
   (* Add edges from regions r1 and r2 to the hash table IF a given edge
    * is not in both r1 AND r2. This will get rid of the overlaps. *)
-  for i = 0 to (Array.length r1) do 
-    
+  for i = 0 to (Array.length r1)-1 do 
+    let s = r1.(i) in 
+    (* If the side isn't in r2, then add it to the hash table. *)
+    if not (in_reg s r2) then all_sides := s::(!all_sides)
+    else ()
   done; 
 
-  for j = 0 to (Array.length r2) do 
+  for j = 0 to (Array.length r2)-1 do 
+    let s = r2.(j) in 
+    (* If the side isn't in r1, add it to the hash tbl. *)
+    if not (in_reg s r1) then all_sides := s::(!all_sides)
+    else () 
+  done; 
 
-  done; *)
+  let l = List.length (!all_sides) in
+
+  (* If the list is empty, it's because every element in r1 was in r2 and vice versa. 
+   * This means r1=r2, so we can just return r1. *)
+  if l=0 then r1 
+
+  (* Otherwise, we need to construct a new region from the sides *)
+  else   
+    let result = Array.of_list (!all_sides) in
+
+    (* Swaps values of [reg] around so that it meets the representation invariant for
+     * a region. 
+     * Precondition: [i] is the index up to which the region has been fixed *)
+    let rec fix_reg reg i  = 
+
+      (* If we've fixed the entire array, then we're done. *)
+      if i = (Array.length reg) - 1 then ()
+      else
+        (* Returns the first index j such that j > i and reg.(j) is adjacent to reg.(i). 
+         * Based on how *)
+        let rec find_next_index i pos =
+          if adj_sides (reg.(i)) (reg.(pos)) then pos else find_next_index i (pos+1) in
+        
+        let j = find_next_index i (i+1) in 
+
+        (*Swap the next side into place*)
+        let temp = reg.(i+1) in 
+        reg.(i+1) <- reg.(j);
+        reg.(j) <- temp; 
+
+        fix_reg reg (i+1)
+    in
+
+    fix_reg result 0;
+    (*print_reg "result" result;*)
+    result
 
 
+let display_regions regs = 
+  let polys = Array.map (reg_to_poly) regs in 
+  for i = 0 to (Array.length regs) - 1 do
+    set_color ((Hashtbl.hash polys.(i)) mod 0xFFFFFF); 
+    fill_poly polys.(i)
+  done
 
+  (*for i = 0 to (Array.length regs) - 1 do  
+    set_color Graphics.black;
+    draw_poly polys.(i)
+  done*)
 
-
-
-
-
-(* [cluster ts] Takes an array of regions [ts] and clusters adjacent regions
+(* [cluster rs] Takes an array of regions [rs] and merges adjacent regions
  * until there are n entries in the list. *)
-let rec cluster n ts = 
+let rec cluster n rs = 
+  print_endline (string_of_int (Array.length rs));
 
-  print_endline (string_of_int (Array.length ts));
-  if Array.length ts <= n then ts else 
+  if (Array.length rs) mod 1000 = 0 
+  then (display_regions rs) else ();
+  (* display_regions rs;  *)
+
+
+  if Array.length rs <= n then rs else 
 
   (* [find_adj arr] Returns the first index i s.t. the regions at index
    * 0 and i are adjacent. *)
-  let rec find_adj i = 
-    if adj_reg ts.(0) ts.(i) then i else find_adj (i+1) in 
-    
-    let i = find_adj 1 in 
-    let new_reg = Array.append (ts.(0)) (ts.(i)) in
+  let rec find_adj i =
+    if i >= Array.length rs then (print_endline "larger :/"; i) else
+    if adj_regs rs.(0) rs.(i) then i else find_adj (i+1) in 
 
-      
-    let new_arr = Array.make ((Array.length ts)-1) new_reg in 
+  (* Find index of region adjacent to rs.(0) *)
+  let i = find_adj 1 in 
 
-    let l1 = i-1 in 
-    let l2 = (Array.length ts) - i - 1 in 
+  (*print_endline "index_found";*)
 
-    Array.blit ts 1 new_arr 0 l1;
-    Array.blit ts (i+1) new_arr l1 l2;
+  (* Create the new region *)
+  let new_reg = merge (rs.(0)) (rs.(i)) in    
 
-    cluster n new_arr
+  (*print_endline "merged";*)
+
+  (* Initialize a new array to copy over to. *)
+  let new_arr = Array.make ((Array.length rs)-1) new_reg in 
+
+  let l1 = i-1 in 
+  let l2 = (Array.length rs) - i - 1 in 
+
+  Array.blit rs 1 new_arr 0 l1;
+  (*print_endline "blit1";*)
+
+  Array.blit rs (i+1) new_arr l1 l2;
+  (*print_endline "blit2";*)
+
+  cluster n new_arr
 
 (* [generate_polys w h n] creates [n] different polygons in an area with width
  * [w] and height [h]. These represent the regions the various tribes inhabit.
  *)
 let generate_polys w h n  = 
 
-  (* First, create a triangle grid *)
+ 
+  (* Opening window for debugging purposes. *)
+  Graphics.open_graph "";
+  Graphics.resize_window 1920 1080;
+  
+  (* First, create a triangle grid. This has type polygon array.  *)
   let tm = ( gen_lattice w h lat_size)  |>
-           List.map (fun x -> [|x|]) |>
-           Array.of_list in
+           Array.of_list |>
+
+           (* Now transform polygon to region *)
+           Array.map (fun poly -> 
+               (* Create an empty region *)
+               let new_reg = Array.make (Array.length poly) ( (0,0),(0,0) ) in 
+
+               (* Create sides from points in polygon *)
+               for i = 0 to (Array.length poly)-1 do
+                 new_reg.(i)<- (poly.(i), poly.( (i+1) mod (Array.length poly)))
+               done;
+
+               (* Return the new region *)
+               new_reg) in
+
 
   (* Shuffle tm in place so adjacent triangles aren't adjacent in the list. *)
   for i = (Array.length tm)-1 downto 0 do 
@@ -199,7 +350,8 @@ let generate_polys w h n  =
     tm.(i) <- temp;
   done;
   print_endline "shuffled";
-  cluster n tm
+  cluster n tm |> 
+  Array.map ( reg_to_poly)
 
 
 
@@ -210,26 +362,29 @@ let generate_regions w h n =
   let gp = generate_polys w h n in
 
   gp |> Array.map (fun p -> {
-                        polygons = p;
+                        polygon = p;
                         color = random_color ();
                         name = "xyzzy";
                         area = 0.0;
                         neighbors = [];
                         edge_lengths = [];
                       }) |> Array.to_list
+
+
 let rec main () = 
+  try
+          let num = ref 0 in 
+          let tock = Sys.time () in 
+          let w = generate_regions 1920 1080 10 in 
+          print_endline (string_of_float ( (Sys.time ()) -. tock));
 
-  let tock = Sys.time () in 
-  let w = generate_regions 1920 1080 50 in 
-  print_endline (string_of_float ( (Sys.time ()) -. tock));
-
-  display {regions = w};
-  ignore (read_line() );
-  main ()
+          display {regions = w};
+          main ()
+  with _ -> print_endline "uh oh"; ignore(read_line()); main ()
 
 (* Commented out for prototype submission. This is how we've been testing our map generator. *)
 let () = 
-  main ();
+  main ()
 
 
 

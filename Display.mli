@@ -6,7 +6,7 @@ type state = string
 
 type map_region = {
   (* Fields relevant for drawing. *)
-  polygons : (int * int) array array;
+  polygon : (int * int) array;
   color : int;
 
   (* Fields providing info to the region. *)

@@ -7,7 +7,7 @@ type state = string
 
 type map_region = {
   (* Fields relevant for drawing. *)
-  polygons : (int * int) array array;
+  polygon : (int*int) array;
   color : int;
 
   (* Fields providing info to the region. *)
@@ -30,12 +30,14 @@ let rec display_world w =
   match w with 
   | r::t -> 
     set_color r.color;
-    for i = 0 to (Array.length r.polygons)-1 do
-      fill_poly r.polygons.(i)
-    done;
+    if Array.length r.polygon = 4 then print_endline "test" else ();
+    fill_poly r.polygon;
+    set_color Graphics.black;
+    draw_poly r.polygon;
     display_world t
 
   | [] -> ()
+
 
 let display w =
   open_graph "";
