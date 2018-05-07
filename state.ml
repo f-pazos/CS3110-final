@@ -106,7 +106,10 @@ let decide s name =
 
 (* [do_food s t r popwtools] is [do_action s name Food] where tribe with name
  * [name] is [t] and occupies region [r]
- * popwtools is max(t.pop, t.tools)*)
+ * popwtools is min(t.pop, t.tools)*)
+(* formula: food is limited above by the area of the region,
+ * is (food + 3*population + 6*popwtools) * climate
+ * tools decreases by floor(popwtools/4) *)
 let do_food s t r popwtools =
   let f = truncate (float (t.food + ((3 * t.pop) + (6 * popwtools))) *. r.climate) in
   let food' = min f r.area in
@@ -117,7 +120,8 @@ let do_food s t r popwtools =
 
 (* [do_tools s t popwtools] is [do_action s name Tools] where tribe with name
  * [name] is [t]
- * popwtools is max(t.pop, t.tools)*)
+ * popwtools is min(t.pop, t.tools)*)
+(* formula: tools increases by floor(pop/2) *)
 let do_tools s t popwtools =
   let t' = {t with tools = (t.tools + (t.pop/2))} in
   let tribes' = (t.name, t')::(remove_assoc t.name s.tribes) in
@@ -125,7 +129,8 @@ let do_tools s t popwtools =
 
 (* [do_weapons s t popwtools] is [do_action s name Weapons] where tribe with name
  * [name] is [t]
- * popwtools is max(t.pop, t.tools)*)
+ * popwtools is min(t.pop, t.tools)*)
+(* formula: weapons increases by floor(popwtools/2), tools decreases by floor(popwtools/3) *)
 let do_weapons s t popwtools =
   let weps' = t.weps + (popwtools/2) in
   let tools' = t.tools - (popwtools/3) in
@@ -135,7 +140,8 @@ let do_weapons s t popwtools =
 
 (* [do_attack is t popwtools a_name] is [do_action s name (Attack a_name)] where tribe with name
  * [name] is [t]
- * popwtools is max(t.pop, t.tools)*)
+ * popwtools is min(t.pop, t.tools)*)
+(* formula: TODO*)
 let do_attack s t popwtools a_name =
   let x = assoc a_name s.tribes in
   let t_popwithweps = min t.pop t.weps in
@@ -165,7 +171,8 @@ let do_attack s t popwtools a_name =
 
 (* [do_gift s t popwtools n i] is [do_action s name (Gift (n,i))] where tribe with name
  * [name] is [t]
- * popwtools is max(t.pop, t.tools)*)
+ * popwtools is min(t.pop, t.tools)*)
+(* formula: TODO*)
 let do_gift s t popwtools n (i:int) =
   let x = assoc n s.tribes in
   let add_factor = max 1 (i/5) in
@@ -230,7 +237,7 @@ let metabolize t:tribe =
   in
   let pop' =
     if t.food < t.pop then
-      t.pop - ((t.food - t.pop) / 3)
+      t.pop - ((t.pop - t.food) / 3)
     else if t.food = t.pop then t.pop
     else t.pop + ((t.food - t.pop) / 3)
   in
@@ -238,7 +245,7 @@ let metabolize t:tribe =
 
 (* [do_all s trs] is the state after all the tribes in [trs] have acted once
  * on state [s] *)
-let rec do_all s trs = 
+let rec do_all s trs =
     match trs with
     | [] -> s
     | (id,tr)::tl -> do_all (do_action s id (decide s id) ) tl
@@ -254,7 +261,7 @@ let rec metbl_all s trs =
 
 (* [step s i] is the state [s] after [i] steps. On each step, each tribe
  * performs one action and after every tribe acts, each tribe metabolizes *)
-let rec step s i = 
+let rec step s i =
   if i = 0
     then s
   else
