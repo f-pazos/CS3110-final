@@ -6,7 +6,7 @@ open Display
 
 let random_color () = Random.int 0xFFFFFF
 
-let lat_size = 49
+let lat_size = 10
 
 (* [gen_lattice w h size] Generates a starting triangle grid. *)
 let gen_lattice w h size =  
@@ -14,8 +14,8 @@ let gen_lattice w h size =
  
   let tmesh = ref [] in 
 
-  for i = 0 to (w/size) do
-    for j = 0 to (h/size) do 
+  for i = 0 to ((w/size)-1) do
+    for j = 0 to ((h/size)-1) do 
 
       let x = size*i in 
       let y = size*j in 
@@ -24,7 +24,7 @@ let gen_lattice w h size =
       let y' = min h (size*(j+1)) in 
 
 
-      let r = (x + (Random.int size), y + (Random.int size) ) in 
+      let r = (x+1+(Random.int(size-1)), y+1+(Random.int(size-1))) in 
 
       tmesh := [| (x,y);   (x',y); r |]::
                [| (x,y);   (x,y'); r |]::
@@ -114,14 +114,14 @@ type side = ( (int*int) * (int*int) )
  * that is - the last side connects to the first side. *)
 type region = side array 
 
-(* [reg_to_poly reg] Creates a polygon from the region reg. We have to be careful to make
- * sure we don't double/skip point when merging since the order of the points in the sides
- * isn't guaranteed. 
+(* [reg_to_poly reg] Creates a polygon from the region reg. We have to be carefu
+ * l to make sure we don't double/skip point when merging since the order of
+ * the points in the sides isn't guaranteed. 
  *      Precondition: reg has length over 2. *)
 let rec reg_to_poly reg =
 
-  (* We want to make sure we start with the point that is in both the first and second
-   * side of [reg]. *)
+  (* We want to make sure we start with the point that is in both the 
+   * first and second side of [reg]. *)
   let (pa, pb) = reg.(0) in 
   let (pc, pd) = reg.(1) in 
   let starter = if pa=pc || pa=pd then pa else pb in 
@@ -201,9 +201,12 @@ let rec merge r1 r2 =
 
   (*print_reg "r1" r1;  
   print_poly "r1_p" (reg_to_poly r1);
+  print_endline ("r1_h: " ^ (string_of_int ((Hashtbl.hash r1))));
 
   print_reg "r2" r2;
-  print_poly "r2_p" (reg_to_poly r2);*)
+  print_poly "r2_p" (reg_to_poly r2);
+  print_endline ("r2_h: " ^ (string_of_int ((Hashtbl.hash r2)) ));*)
+
 
   (* Add edges from regions r1 and r2 to the hash table IF a given edge
    * is not in both r1 AND r2. This will get rid of the overlaps. *)
@@ -223,26 +226,27 @@ let rec merge r1 r2 =
 
   let l = List.length (!all_sides) in
 
-  (* If the list is empty, it's because every element in r1 was in r2 and vice versa. 
-   * This means r1=r2, so we can just return r1. *)
+  (* If the list is empty, it's because every element in r1 was in r2 and 
+   * vice versa. This means r1=r2, so we can just return r1. *)
   if l=0 then r1 
 
   (* Otherwise, we need to construct a new region from the sides *)
   else   
     let result = Array.of_list (!all_sides) in
 
-    (* Swaps values of [reg] around so that it meets the representation invariant for
-     * a region. 
+    (* Swaps values of [reg] around so that it meets the representation 
+     * invariant for a region. 
      * Precondition: [i] is the index up to which the region has been fixed *)
     let rec fix_reg reg i  = 
 
       (* If we've fixed the entire array, then we're done. *)
       if i = (Array.length reg) - 1 then ()
       else
-        (* Returns the first index j such that j > i and reg.(j) is adjacent to reg.(i). 
-         * Based on how *)
+        (* Returns the first index j such that j > i and reg.(j) is adjacent
+         * to reg.(i). *)
         let rec find_next_index i pos =
-          if adj_sides (reg.(i)) (reg.(pos)) then pos else find_next_index i (pos+1) in
+          if adj_sides (reg.(i)) (reg.(pos)) then pos 
+          else find_next_index i (pos+1) in
         
         let j = find_next_index i (i+1) in 
 
@@ -255,7 +259,8 @@ let rec merge r1 r2 =
     in
 
     fix_reg result 0;
-    (*print_reg "result" result;*)
+    (*print_reg "result" result;
+    print_endline ("result_h: " ^ (string_of_int (Hashtbl.hash r1)) );*)
     result
 
 
@@ -273,11 +278,12 @@ let display_regions regs =
 
 (* [cluster rs] Takes an array of regions [rs] and merges adjacent regions
  * until there are n entries in the list. *)
-let rec cluster n rs = 
+let rec cluster n rs =
+  (*print_endline "(******************************)";*)
   print_endline (string_of_int (Array.length rs));
 
-  if (Array.length rs) mod 1000 = 0 
-  then (display_regions rs) else ();
+  (* if (Array.length rs) mod 1000 = 0 
+  then (display_regions rs) else (); *)
   (* display_regions rs;  *)
 
 
@@ -374,13 +380,16 @@ let generate_regions w h n =
 let rec main () = 
   try
           let num = ref 0 in 
-          let tock = Sys.time () in 
-          let w = generate_regions 1920 1080 10 in 
+          num := (!num) + 1;
+          if (!num) = 10 then () else let tock = Sys.time () in 
+          let w = generate_regions 1920 1080 30 in 
           print_endline (string_of_float ( (Sys.time ()) -. tock));
 
           display {regions = w};
+
+          (ignore (read_line ()));
           main ()
-  with _ -> print_endline "uh oh"; ignore(read_line()); main ()
+  with _ -> (ignore (read_line ())); main ()
 
 (* Commented out for prototype submission. This is how we've been testing our map generator. *)
 let () = 
