@@ -1,32 +1,26 @@
-(* [command] represents a command input by a player. *)
-(* You may redefine [command] to be synonymous with whatever
- * type you wish, but its name must not be changed.
- * It is okay to expose this type rather than make it abstract,
- * because it is not the representation type of a data structure. *)
+(*borrowed from A2*)
+(* [command] represents a command input by a player during the game. *)
 type command =
-| Go of string
-| Take of string
-| Drop of string
-| Quit
-| Look
-| Inventory
-| Score
-| Turns
+ | Step of int
+ | ViewAll
+ | View of string
+ | Save of string
+ | Quit
+
+(* [start] represents a command input by a player to start the game. *)
+type start =
+ | Filename of string
+ | Params of int * int * int
 
 
-(********************************************************
- * DO NOT CHANGE THIS CODE
- * It is part of the interface the course staff will
- * use to test your submission.
- *)
+(* [parse_game str] is the command that represents player input [str] during the
+ * game. If no command is recognized, [str] is assumed to represent "View "[str]
+ * requires: [str] is one of the commands forms that a player can use during
+ * the game. *)
+val parse_game : string -> command
 
-(* [parse str] is the command that represents player input [str].
- * If no command is recognized, [str] is assumed to represent "Go "[str]
- * requires: [str] is one of the commands forms described in the
- *   assignment writeup. *)
-val parse : string -> command
-
-(* END DO NOT CHANGE
- ********************************************************)
-
-(* You are free to add more code below *)
+(* [parse_start str] is the command that represents player input [str] during the game.
+ * If no command is recognized, [str] is assumed to represent "Filename "[str]
+ * requires: [str] is one of the commands forms that a player can use to start
+ * the game. *)
+val parse_start : string -> start

@@ -1,7 +1,7 @@
 (* TODO Implement state so this can be removed. *)
-type state = string
+open State
 
-(* A type that maintains data intrinsic to a certain region - area, climate, 
+(* A type that maintains data intrinsic to a certain region - area, climate,
  * color, etc. *)
 
 type map_region = {
@@ -11,7 +11,7 @@ type map_region = {
 
   (* Fields providing info to the region. *)
   name : string;
-  area : float; 
+  area : float;
 
   (* Relational data derived from map. *)
   neighbors : map_region list;
@@ -20,7 +20,7 @@ type map_region = {
 
 (* An abstract type that holds what the map of the world looks like. This has
  * a physical map, as well as various details about the regions themselves
- * size, shared border length, etc. 
+ * size, shared border length, etc.
  *)
 type world_map = {
   (* A list of all the regions in the world. *)
@@ -29,8 +29,8 @@ type world_map = {
 
 
 (* TODO change this to display a state. *)
-(* [display world_map] will create a graphic representation for the current 
+(* [display world_map] will create a graphic representation for the current
    simulation state, so the user can visually see how the world is
-   progressing. 
+   progressing.
 *)
 val display : world_map -> unit
