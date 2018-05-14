@@ -43,6 +43,7 @@ module type STATE = sig
     area : int;
     climate : float;
     neighbors : (string * float) list;
+    polygon : (int * int) array
   }
 
   type attd = Generous | Neutral | Aggressive

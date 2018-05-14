@@ -6,6 +6,7 @@ let r1 = {
   area = 700;
   climate = 1.1;
   neighbors = [("b", 1.0);("c",1.0)];
+  polygon = [||]
 }
 
 let r2 = {
@@ -13,12 +14,16 @@ let r2 = {
   area = 1000000;
   climate = 1.4;
   neighbors = [("a", 1.0)];
+  polygon = [| |]
 }
+
+
 let r3 = {
   name = "c";
   area = 500;
   climate = 1.5;
-  neighbors = [("a",1.0)]
+  neighbors = [("a",1.0)];
+  polygon = [||]
 }
 
 let t1 = {
