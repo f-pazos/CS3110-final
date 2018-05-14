@@ -8,7 +8,7 @@ open Map_Generator
 type point = int * int
 
 (* [distance p0 p1] returns the cartesian distance between p0 and p1. *)
-let distance (x0, y0) (x1, y1) : float = ( (x0-.x1)**2.0 + (y0-.y1)**2.0)**0.5
+let distance (x0, y0) (x1, y1) : float = ( (x0-.x1)**2.0 +. (y0-.y1)**2.0)**0.5
 
 
 (*****************************************************************************)
@@ -29,7 +29,7 @@ type outline = {size: int; points : point array; sides : side array}
 (* TODO *)
 (* [neighbors o1 o2] Returns true if outlines [o1] and [o2] share at least
  * one side, but not all sides.  *)
-let neighbrs o1 o2 = True
+let neighbrs o1 o2 = true
 
 (*****************************************************************************)
 (* MAP and related functions                                                 *)
@@ -46,20 +46,20 @@ let repok_map map = ()
 let polygon_of_outline out = out.points
 
 (* [outline_of_polygon poly] creates an outline of the Graphics.polygon poly. *)
-let outline_of_polygon poly = {points = [||]; sides = [||] }
+let outline_of_polygon poly = {size = 0; points = [||]; sides = [||] }
 
 (*TODO : test [area_of_outline] and [len_border] *)
 (* [area_of_outline o] returns the area of outline o. *) 
 (* Based on this method: https://web.archive.org/web/20100405070507/http://valis.cs.uiuc.edu/~sariel/research/CG/compgeom/msg00831.html *)
-let area_of_outline o : float = 
+let area_of_outline (o:outline) : float = 
   (* This method essentially works via Green's theorem like a 
    * planometer does. *)
   let n = o.size in 
   let area = ref 0.0 in 
   for i = 0 to n-1 do
     let j = (i+1) mod n in
-    area := (!area) +. fst (o.points.(i)) *. snd (o.points.(j));
-    area := (!area) -. snd (o.points.(i)) *. fst (o.points.(j));
+    area := (!area) +. float_of_int (fst (o.points.(i)) * snd (o.points.(j)));
+    area := (!area) -. float_of_int (snd (o.points.(i)) * fst (o.points.(j)));
   done;
   
   area := (!area) /. 2.0;
