@@ -6,7 +6,7 @@ open Display
 
 let random_color () = Random.int 0xFFFFFF
 
-let lat_size = 10
+let lat_size = 50
 
 (* [gen_lattice w h size] Generates a starting triangle grid. *)
 let gen_lattice w h size =  
@@ -98,20 +98,20 @@ let generate_tmesh w h n =
 
 
 (* Here is a type representing the side of a polygon.
- * AF: A side (p0, p1) represents the side of a polygon with points at p0 and p1. 
- * RI: None. A side may be given with either point first. They would still be the 
- * same side. *)
+ * AF: A side (p0, p1) represents the side of a polygon with points at p0 & p1.
+ * RI: None. A side may be given with either point first. They would still be
+ * the same side. *)
 type side = ( (int*int) * (int*int) ) 
 
-(* Here is a type representing a region, which is basically just the outline of a 
- * polygon. 
+(* Here is a type representing a region, which is basically just the outline of
+ * a polygon. 
  *
- * AF: For a given polygon [|p0, p1, ..., pn|], its region is an array of all the edges 
- * in the polygon in order - that is, 
+ * AF: For a given polygon [|p0, p1, ..., pn|], its region is an array of
+ * all the edges in the polygon in order - that is, 
  * [| s0, s1, ..., sn |].
  *
- * RI: The relative order of the edges is always maintained. Further, the array wraps around -
- * that is - the last side connects to the first side. *)
+ * RI: The relative order of the edges is always maintained. Further, the array 
+ * wraps around - that is - the last side connects to the first side. *)
 type region = side array 
 
 (* [reg_to_poly reg] Creates a polygon from the region reg. We have to be carefu
@@ -162,8 +162,8 @@ let print_poly name poly =
   print_endline ""
 
 
-(* [adj_sides s1 s2] Returns true if s1 and s2 are adjacent sides - that is, they share
- * a point. *)
+(* [adj_sides s1 s2] Returns true if s1 and s2 are adjacent sides - that is, 
+ * they share a point. *)
 let adj_sides (p1, p2)  (p3, p4)  = 
   p1=p3 || p1=p4 || p2=p3 || p2=p4
 
@@ -173,9 +173,8 @@ let in_reg ( (p0, p1):side) (r:region) =
   (* The side might be given with either points first. *)
   Array.mem (p0, p1) r || Array.mem (p1, p0) r 
 
-
-(* [adj_regs r1 r2] Returns true if r1 and r2 are adjacent regions - that is, they share
- * at least one edge. 
+(* [adj_regs r1 r2] Returns true if r1 and r2 are adjacent regions - that is, 
+ * they share at least one edge. 
  * NOTE: This means that two identical regions are considered adjacent.  *)
 let adj_regs r1 r2 = 
 
@@ -382,7 +381,7 @@ let rec main () =
           let num = ref 0 in 
           num := (!num) + 1;
           if (!num) = 10 then () else let tock = Sys.time () in 
-          let w = generate_regions 1920 1080 30 in 
+          let w = generate_regions 1920 1080 10 in 
           print_endline (string_of_float ( (Sys.time ()) -. tock));
 
           display {regions = w};
@@ -391,7 +390,8 @@ let rec main () =
           main ()
   with _ -> (ignore (read_line ())); main ()
 
-(* Commented out for prototype submission. This is how we've been testing our map generator. *)
+(* Commented out for prototype submission. This is how we've been testing our
+ * map generator. *)
 let () = 
   main ()
 

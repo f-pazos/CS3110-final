@@ -25,6 +25,11 @@ type world_map = {
   regions : map_region list
 }
 
+(* TODO: Implement alter_color *)
+(* [alter_color col st] Alters color [col] based on the state
+ * [st] to provide some information of the state graphically. *)
+let alter_color col st = ()
+
 (* Displays the world w on an already-open graphics canvas. *)
 let rec display_world w = 
   match w with 
