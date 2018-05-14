@@ -1,0 +1,199 @@
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Runner: processes
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Chooser: simple
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Configuration suite_name = "State test suite"
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Configuration cache_filename = "/home/vagrant/CS3110-final/_build/oUnit-$(suite_name).cache"
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Configuration display = "true"
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Configuration results_style_1_X = "false"
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Configuration verbose = "false"
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Configuration health_check_interval = "1."
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Configuration testdata_dir = "none"
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Configuration chooser = "simple"
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Configuration output_html_dir = "none"
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Configuration processes_kill_period = "5."
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Configuration runner = "processes"
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Configuration shards = "1"
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Configuration processes_grace_period = "5."
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Configuration log_encoding = "utf-8"
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Configuration output_junit_file = "none"
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Configuration output_file = "/home/vagrant/CS3110-final/_build/oUnit-$(suite_name)-$(shard_id).log"
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Using 1 workers maximum.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Starting worker number vm3110-2018sp#01.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: Worker vm3110-2018sp#01 started.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:0:metabolize 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: Start test State test suite:0:metabolize 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:0:metabolize 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: Test State test suite:0:metabolize 1 is successful.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:0:metabolize 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: End test State test suite:0:metabolize 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:0:metabolize 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:1:metabolize 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: Start test State test suite:1:metabolize 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:1:metabolize 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: Test State test suite:1:metabolize 2 is successful.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:1:metabolize 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: End test State test suite:1:metabolize 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:1:metabolize 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:2:metabolize 3.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: Start test State test suite:2:metabolize 3.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:2:metabolize 3.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: Test State test suite:2:metabolize 3 is successful.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:2:metabolize 3.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: End test State test suite:2:metabolize 3.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:2:metabolize 3.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:3:food 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: Start test State test suite:3:food 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:3:food 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: Test State test suite:3:food 1 is successful.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:3:food 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: End test State test suite:3:food 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:3:food 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:4:food 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: Start test State test suite:4:food 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:4:food 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: Test State test suite:4:food 2 is successful.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:4:food 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: End test State test suite:4:food 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:4:food 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:5:food 3.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: Start test State test suite:5:food 3.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:5:food 3.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: Test State test suite:5:food 3 is successful.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:5:food 3.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: End test State test suite:5:food 3.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:5:food 3.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:6:tools 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: Start test State test suite:6:tools 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:6:tools 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: Test State test suite:6:tools 1 is successful.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:6:tools 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: End test State test suite:6:tools 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:6:tools 1.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:7:tools 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: Start test State test suite:7:tools 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:7:tools 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: Test State test suite:7:tools 2 is successful.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:7:tools 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#01 I: End test State test suite:7:tools 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:7:tools 2.
+2018-05-13T15:29:49+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:8:tools 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Start test State test suite:8:tools 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:8:tools 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Test State test suite:8:tools 3 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:8:tools 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: End test State test suite:8:tools 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:8:tools 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:9:weapons 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Start test State test suite:9:weapons 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:9:weapons 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Test State test suite:9:weapons 1 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:9:weapons 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: End test State test suite:9:weapons 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:9:weapons 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:10:weapons 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Start test State test suite:10:weapons 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:10:weapons 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Test State test suite:10:weapons 2 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:10:weapons 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: End test State test suite:10:weapons 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:10:weapons 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:11:weapons 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Start test State test suite:11:weapons 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:11:weapons 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Test State test suite:11:weapons 3 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:11:weapons 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: End test State test suite:11:weapons 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:11:weapons 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:12:gift 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Start test State test suite:12:gift 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:12:gift 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Test State test suite:12:gift 1 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:12:gift 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: End test State test suite:12:gift 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:12:gift 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:13:gift 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Start test State test suite:13:gift 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:13:gift 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Test State test suite:13:gift 2 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:13:gift 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: End test State test suite:13:gift 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:13:gift 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:14:gift 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Start test State test suite:14:gift 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:14:gift 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Test State test suite:14:gift 3 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:14:gift 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: End test State test suite:14:gift 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:14:gift 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:15:gift 4.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Start test State test suite:15:gift 4.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:15:gift 4.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Test State test suite:15:gift 4 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:15:gift 4.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: End test State test suite:15:gift 4.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:15:gift 4.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:16:decide 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Start test State test suite:16:decide 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:16:decide 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Test State test suite:16:decide 1 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:16:decide 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: End test State test suite:16:decide 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:16:decide 1.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:17:decide 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Start test State test suite:17:decide 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:17:decide 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Test State test suite:17:decide 2 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:17:decide 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: End test State test suite:17:decide 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:17:decide 2.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:18:decide 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Start test State test suite:18:decide 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:18:decide 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Test State test suite:18:decide 3 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:18:decide 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: End test State test suite:18:decide 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:18:decide 3.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Still 1 tests running : State test suite:19:step 0.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:19:step 0.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Start test State test suite:19:step 0.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Still 1 tests running : State test suite:19:step 0.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:19:step 0.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: Test State test suite:19:step 0 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Still 1 tests running : State test suite:19:step 0.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:19:step 0.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#01 I: End test State test suite:19:step 0.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Still 1 tests running : State test suite:19:step 0.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 1 tests running: State test suite:19:step 0.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: 0 tests running: .
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Worker vm3110-2018sp#01 has ended.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Used 1 worker during test execution.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Run 20 tests with shard vm3110-2018sp#01.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: ==============
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Summary:
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:19:step 0 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:18:decide 3 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:17:decide 2 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:16:decide 1 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:15:gift 4 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:14:gift 3 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:13:gift 2 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:12:gift 1 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:11:weapons 3 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:10:weapons 2 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:9:weapons 1 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:8:tools 3 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:7:tools 2 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:6:tools 1 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:5:food 3 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:4:food 2 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:3:food 1 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:2:metabolize 3 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:1:metabolize 2 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Test State test suite:0:metabolize 1 is successful.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Ran: 20 tests in: 0.87 seconds.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Cases: 20.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Tried: 20.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Errors: 0.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Failures: 0.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Skip: 0.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Todo: 0.
+2018-05-13T15:29:50+00:00 vm3110-2018sp#00 I: Timeout: 0.
