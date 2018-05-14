@@ -5,5 +5,5 @@ open State
 val play_game : state -> unit
 
 (* [main] starts a REPL that prompts the user for a state file or
- * paramters for starting the game, and then starts the game *)
+ * parameters for starting the game, and then starts the game *)
 val main : unit -> unit
