@@ -29,7 +29,8 @@ let parse_params_full str =
         (String.length size_str + String.length att_str + 2)
       then let scar_str = Str.matched_string str in
       let size_num = int_of_string (Str.string_after size_str 5) in
-      let att_num = int_of_string (Str.string_after att_str 9) in
+      let att_num_raw = int_of_string (Str.string_after att_str 9) in
+      let att_num = if att_num_raw > 2 then 2 else att_num_raw in
       let scar_num = int_of_string (Str.string_after scar_str 11) in
       Params (size_num, att_num, scar_num)
       else raise Parsing_Error
@@ -52,7 +53,8 @@ let parse_params_short str =
         (String.length size_str + String.length att_str + 2)
       then let scar_str = Str.matched_string str in
       let size_num = int_of_string (Str.string_after size_str 2) in
-      let att_num = int_of_string (Str.string_after att_str 2) in
+      let att_num_raw = int_of_string (Str.string_after att_str 2) in
+      let att_num = if att_num_raw > 2 then 2 else att_num_raw in
       let scar_num = int_of_string (Str.string_after scar_str 2) in
       Params (size_num, att_num, scar_num)
       else raise Parsing_Error
@@ -75,7 +77,8 @@ let parse_params_nums str =
         (String.length size_str + String.length att_str + 2)
       then let scar_str = Str.matched_string str in
       let size_num = int_of_string size_str in
-      let att_num = int_of_string att_str in
+      let att_num_raw = int_of_string att_str in
+      let att_num = if att_num_raw > 2 then 2 else att_num_raw in
       let scar_num = int_of_string scar_str in
       Params (size_num, att_num, scar_num)
       else raise Parsing_Error
