@@ -17,22 +17,34 @@ let display_init () =
 
 (* [display st] provides a graphic representation for [st]. *)
 let display st = 
-  let rec display_helper regs text_y = match regs with 
+  let rec poly_helper regs = match regs with 
     | [] -> ()
     | (_, h)::t -> begin
-                print_endline (string_of_int (h.base_color));
-                set_color h.base_color;
-                print_endline (string_of_int( Array.length h.polygon));
-                fill_poly h.polygon;
-                set_color black;
-                draw_poly h.polygon;
-                moveto 820 text_y;
-                draw_string h.name;
-                display_helper t (text_y - 30)
-              end in 
-
+      print_endline (string_of_int (h.base_color));
+      set_color h.base_color;
+      print_endline (string_of_int( Array.length h.polygon));
+      fill_poly h.polygon;
+      set_color black;
+      draw_poly h.polygon;
+      poly_helper t
+    end in
+  let rec tribe_helper tribes y = match tribes with
+    | [] -> ()
+    | (n,tr)::tl -> begin
+      set_color black;
+      moveto 820 y;
+      draw_string n;
+      moveto 840 (y-15);
+      let s1 = "Pop: "^(string_of_int tr.pop)^" | Food: "^(string_of_int tr.food) in
+      draw_string s1;
+      moveto 840 (y-30);
+      let s2 = "Tools: "^(string_of_int tr.tools)^" | Weapons: "^(string_of_int tr.weps) in
+      draw_string s2;
+      tribe_helper tl (y-40)
+    end in
   set_color black;
-  display_helper st.regions 770
+  poly_helper st.regions;
+  tribe_helper st.tribes 780
 
 
   
