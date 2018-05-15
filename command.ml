@@ -9,35 +9,86 @@ type start =
  | Filename of string
  | Params of int * int * int
 
+let parse_params_full str =
+  if Str.string_match (Str.regexp "size \\([0-9]\\)+") str 0
+  then let size_str = Str.matched_string str in
+    if Str.string_match (Str.regexp "attitude \\([0-9]\\)+")
+      str (String.length size_str + 1)
+    then let att_str = Str.matched_string str in
+      if Str.string_match (Str.regexp "scarceness \\([0-9]\\)+") str
+        (String.length size_str + String.length att_str + 2)
+      then let scar_str = Str.matched_string str in
+      let size_num = int_of_string (Str.string_after size_str 5) in
+      let att_num = int_of_string (Str.string_after att_str 9) in
+      let scar_num = int_of_string (Str.string_after scar_str 11) in
+      Params (size_num, att_num, scar_num)
+      else failwith "Parsing error"
+    else failwith "Parsing error"
+  else failwith "Parsing error"
+
+let parse_params_short str =
+  if Str.string_match (Str.regexp "s \\([0-9]\\)+") str 0
+  then let size_str = Str.matched_string str in
+    if Str.string_match (Str.regexp "a \\([0-9]\\)+")
+      str (String.length size_str + 1)
+    then let att_str = Str.matched_string str in
+      if Str.string_match (Str.regexp "s \\([0-9]\\)+") str
+        (String.length size_str + String.length att_str + 2)
+      then let scar_str = Str.matched_string str in
+      let size_num = int_of_string (Str.string_after size_str 2) in
+      let att_num = int_of_string (Str.string_after att_str 2) in
+      let scar_num = int_of_string (Str.string_after scar_str 2) in
+      Params (size_num, att_num, scar_num)
+      else failwith "Parsing error"
+    else failwith "Parsing error"
+  else failwith "Parsing error"
+
+let parse_params_nums str =
+  if Str.string_match (Str.regexp "\\([0-9]\\)+") str 0
+  then let size_str = Str.matched_string str in
+    if Str.string_match (Str.regexp "\\([0-9]\\)+")
+      str (String.length size_str + 1)
+    then let att_str = Str.matched_string str in
+      if Str.string_match (Str.regexp "\\([0-9]\\)+") str
+        (String.length size_str + String.length att_str + 2)
+      then let scar_str = Str.matched_string str in
+      let size_num = int_of_string size_str in
+      let att_num = int_of_string att_str in
+      let scar_num = int_of_string scar_str in
+      Params (size_num, att_num, scar_num)
+      else failwith "Parsing error"
+    else failwith "Parsing error"
+  else failwith "Parsing error"
+
+let parse_filename str =
+  if Str.string_match (Str.regexp "file ") str 0
+    then let filename = Str.string_after str 5 in Filename filename
+  else if Str.string_match (Str.regexp "filename ") str 0
+    then let filename = Str.string_after str 9 in Filename filename
+  else let filename = str in Filename filename
+
+ (* options for params:
+  * size _ attitude _ scarceness _
+  * s _ a _ s _
+  * _ _ _*)
+ (* options for filename:
+  * file _
+  * filename _
+  * _*)
 let parse_start str =
-  let str1 = String.lowercase_ascii str in failwith "Undefined"
-
-  Str.string_match (Str.regexp "size \\([0-9]\\)+") input1 0
-  Str.matched_string input1
-
-  
-  (* options for params:
-   * size _ attitude _ scarceness _
-   * s _ a _ s _
-   * _ _ _*)
-  (* options for filename:
-   * file _
-   * filename _
-   * _*)
-
-  (* match str1 with
-  | "quit" -> Quit
-  | "look" -> Look
-  | "inventory" -> Inventory
-  | "inv" -> Inventory
-  | "score" -> Score
-  | "turns" -> Turns
-  | x -> if String.length x < 2 || String.sub x 0 2 = "go"
-           then Go (String.sub x 3 (String.length x - 3))
-         else if String.length x >= 5 then
-                let the_item = String.sub x 5 (String.length x - 5) in
-                if String.sub x 0 5 = "take " then Take the_item else
-                if String.sub x 0 5 = "drop " then Drop the_item else Go x
-         else Go x *)
+  let str1 = String.lowercase_ascii str in
+  if Str.string_match (Str.regexp
+  "size \\([0-9]\\)+ attitude \\([0-9]\\)+ scarceness \\([0-9]\\)+")
+  str1 0
+    then let str_matched = Str.matched_string str1 in parse_params_full str_matched
+  else if Str.string_match (Str.regexp
+  "s \\([0-9]\\)+ a \\([0-9]\\)+ s \\([0-9]\\)+")
+  str1 0
+    then let str_matched = Str.matched_string str1 in parse_params_short str_matched
+  else if Str.string_match (Str.regexp
+  "\\([0-9]\\)+ \\([0-9]\\)+ \\([0-9]\\)+")
+  str1 0
+    then let str_matched = Str.matched_string str1 in parse_params_nums str_matched
+  else parse_filename str1
 
 let parse_game str = failwith "Undefined"

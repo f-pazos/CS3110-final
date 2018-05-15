@@ -1,6 +1,6 @@
 test:
 	ocamlbuild -use-ocamlfind test.byte && ./test.byte
-ui: 
+ui:
 	ocamlbuild -use-ocamlfind graphics_sandbox.byte && ./graphics_sandbox.byte
 
 check:
@@ -11,3 +11,6 @@ clean:
 
 zip:
 	zip finalsrc.zip *.ml*
+
+play:
+	ocamlbuild -use-ocamlfind main.byte && ./main.byte
