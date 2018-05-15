@@ -54,10 +54,15 @@ let print_tribe (s : state) t_str =
   begin
     print_endline ("Name: "^t.name);
     print_endline ("Population: "^(string_of_int t.pop));
-    print_endline ("Food: "^(string_of_int t.pop));
-    print_endline ("Tools: "^(string_of_int t.pop));
-    print_endline ("Weapons: "^(string_of_int t.pop));
-    print_endline ("Attitude: "^(string_of_int t.pop));
+    print_endline ("Food: "^(string_of_int t.food));
+    print_endline ("Tools: "^(string_of_int t.tools));
+    print_endline ("Weapons: "^(string_of_int t.weps));
+    let att_string = match t.attd with
+    | Generous -> "Generous"
+    | Neutral -> "Neutral"
+    | Aggressive -> "Aggressive"
+    in
+    print_endline ("Attitude: "^att_string);
     print_endline "Opinions: ";
     print_opinions t.opins;
     let r_str = t.reg in
@@ -125,7 +130,7 @@ let main () =
   print_endline "size _ attitude _ scarceness _";
   print_endline "size is the number of tribes";
   print_endline "attitude is 0 for generous, 1 for neutral, and 2 for aggressive";
-  print_endline "scarceness is a number between 0 and 100";
+  print_endline "scarceness is a number between 0 and 10, where 0 is scarce and 10 is abundant";
   print_string  "> ";
   match read_line () with
   | exception End_of_file -> ()
