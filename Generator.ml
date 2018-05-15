@@ -140,12 +140,22 @@ let rec generate_names n : string array =
     let ic = open_in "tribe_names.txt" in 
     let names = read_names ic [] |> Array.of_list in 
 
+    
     let result = Array.make n "" in 
 
     for i = 0 to n-1 do 
       result.(i) <- names.(Random.int (Array.length names))
     done;
-    result
+
+    (* We need to check that there are n unique names *)
+    let tbl = Hashtbl.create n in 
+    for i = 0 to n-1 do 
+      Hashtbl.add tbl result.(i) result.(i) 
+    done;
+
+    (* If the hashtbl is not of size n, then that means we accidentally
+     * grabbed two of the same name. In this case, we should regenerate *)
+    if Hashtbl.length tbl <> n then generate_names n else result
   
   with _ -> failwith "Error reading tribe_names.txt"
 
