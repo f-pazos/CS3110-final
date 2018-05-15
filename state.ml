@@ -16,6 +16,9 @@ type region = {
 
 type attd = Generous | Neutral | Aggressive
 
+(* The string in Attack is the target *)
+type action = Food | Tools | Weapons | Attack of string | Gift of (string * int)
+
 type tribe = {
   name : string;
   pop : int;
@@ -25,14 +28,15 @@ type tribe = {
   attd : attd;
   opins : (string * int) list;
   reg : string;
+  last_action : action;
 }
 type state = {
   regions : (string * region) list;
   tribes : (string * tribe) list;
+  turns : int;
 }
 
-(* The string in Attack is the target *)
-type action = Food | Tools | Weapons | Attack of string | Gift of (string * int)
+
 
 (* [min_opin o] is the lowest int opinion of the opins list [o] or the base
  * int [i] *)
@@ -203,7 +207,8 @@ let do_gift s t name (i:int) =
  * increases by 1 for every item of food given, with a base of 1
  *)
 let do_action s name a =
-  let t = assoc name s.tribes in
+  let t_ = assoc name s.tribes in
+  let t = {t_ with last_action = a} in
   let r = assoc name s.regions in
   let popwtools = min t.tools t.pop in
   match a with
@@ -261,4 +266,4 @@ let rec step s i =
   else
     let done_all = do_all s s.tribes in
     let met_all = metbl_all done_all done_all.tribes in
-    step met_all (i - 1)
+    step {met_all with turns = (s.turns + 1)} (i - 1)
