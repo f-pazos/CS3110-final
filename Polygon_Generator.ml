@@ -4,9 +4,11 @@
 open Graphics
 open Display
 
+let debug_polygon = false
+
 let random_color () = Random.int 0xFFFFFF
 
-let lat_size = 20
+let lat_size = 50
 
 (* [gen_lattice w h size] Generates a starting triangle grid. *)
 let gen_lattice w h size =  
@@ -32,8 +34,9 @@ let gen_lattice w h size =
       done
     done; 
   
-  print_endline (string_of_int w);    
-    (!tmesh)
+  if debug_polygon then print_endline (string_of_int w) else ();
+
+  (!tmesh)
 
 (* NOTE *)
 (* This is an old function that we don't use anymore. Keeping it around just in case. It used
@@ -137,7 +140,9 @@ let rec reg_to_poly reg =
   done;
   new_poly
 
+(* Prints out region reg labeled with [name]. Only prints if debug is on *)
 let print_reg name reg = 
+  if debug_polygon then  ( 
   print_string (name ^ ": [|");
   for i = 0 to (Array.length reg)-1 do 
     print_string "( (";
@@ -148,10 +153,15 @@ let print_reg name reg =
   done;
 
   print_string "|]";
-  print_endline ""
+  print_endline "" )
+
+  else ()
 
 
+(* Prints out polygon [poly] labeled with [name]. Only prints if debug is on *)
 let print_poly name poly = 
+  if debug_polygon then (
+
   print_string (name ^ ": [|");
   for i = 0 to (Array.length poly)-1 do 
     print_string "(";
@@ -160,14 +170,19 @@ let print_poly name poly =
   done;
 
   print_string "|]";
-  print_endline ""
+  print_endline "")
+
+  else () 
 
 
 let print_regions regs = 
+  if debug_polygon then 
   for i = 0 to (Array.length regs) - 1 do
     print_poly "" regs.(i);
     print_endline ""
   done
+  else ()
+
 (* [adj_sides s1 s2] Returns true if s1 and s2 are adjacent sides - that is, 
  * they share a point. *)
 let adj_sides (p1, p2)  (p3, p4)  = 
@@ -271,12 +286,9 @@ let rec merge r1 r2 =
 (* [cluster rs] Takes an array of regions [rs] and merges adjacent regions
  * until there are n entries in the list. *)
 let rec cluster n rs =
-  (*print_endline "(******************************)";*)
-  print_endline (string_of_int (Array.length rs));
+  if debug_polygon then print_endline (string_of_int (Array.length rs))
+  else ();
 
-  (* if (Array.length rs) mod 1000 = 0 
-  then (display_regions rs) else (); *)
-  (* display_regions rs;  *)
 
 
   if Array.length rs <= n then rs else 
@@ -342,7 +354,6 @@ let generate_polys w h n  =
     tm.(i) <- temp;
   done;
 
-  print_endline (string_of_int (Array.length tm));
   cluster n tm |> 
   Array.map ( reg_to_poly) in 
 
