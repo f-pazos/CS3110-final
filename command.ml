@@ -134,4 +134,4 @@ let parse_game str =
     with _ -> View str1
   else if Str.string_match (Str.regexp "view ") str1 0
     then let tribe_name = Str.string_after str1 5 in View tribe_name
-  else view str1
+  else View str1
