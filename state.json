@@ -7,7 +7,13 @@
 "neighbors" : {
 "name": {"type": "string"},
 "prox": {"type": "float"},
-}
+},
+"type": "array",
+"polygons" : {
+"x": {"type": "int"},
+"y": {"type": "int"},
+},
+"base_color": {"type": "int"},
 }
 {
 "type": "tribe",
@@ -16,7 +22,7 @@
 "food": {"type": "integer"},
 "tools": {"type": "integer"},
 "weps": {"type": "integer"},
-"attd": {"type": "attd"},
+"attd": {"type": "int"},
 "opins": {
   "type": "array",
   "name": {"type":"string"},
