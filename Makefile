@@ -7,7 +7,7 @@ clean:
 	ocamlbuild -clean
 
 zip:
-	zip finalsrc.zip *.ml*
+	zip finalsrc.zip *.ml* tribe_names.txt
 
 play:
 	ocamlbuild -use-ocamlfind main.byte && ./main.byte
