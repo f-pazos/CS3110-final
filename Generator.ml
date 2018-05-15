@@ -222,16 +222,46 @@ let generate_regions w h n : (string * State.region) list =
   done;
   (!regs)
 
+(* [generate_opins nbrs] returns a [(string * int) list] representing
+ * the [nbrs] with the opinion set to 0 *)
+let rec generate_opins nbrs = 
+  match nbrs with
+  | [] -> []
+  | (id,_)::tl -> (id,0)::(generate_opins tl)
 
-(* TODO generate tribes *)
 (* [generate_tribes regs] Creates the tribes for a given map regs. *)
-let generate_tribes regs  = []
+let rec generate_tribes regs attd scr =
+  match regs with
+  | [] -> ()
+  | (id,r)::tl -> begin
+    let popn = (Random.int 100) + 20 in
+    let rand = Random.int 100 in
+    let attd_ = begin 
+      if rand < 20 then (attd - 1)
+      else if rand > 80 then (attd + 1)
+      else attd
+      end in
+    {
+      name = td;
+      pop = popn;
+      food = popn;
+      tools = 0;
+      weps = 0;
+      attd = begin
+        if ((attd_ = 0) || (attd_ = 3)) then Generous
+        else if (attd_ = 1) then Neutral
+        else Aggressive
+      end
+      opins = generate_opins r.neighbors;
+      reg = id;
+    }::(generate_tribes tl attd scr)
+  end
 
 (* [generate_state size attitude scarceness] Generates a starting state. *)
 let generate_state size attitude scarceness = 
   let st0 = { 
     regions = generate_regions 800 800 size;
-    tribes = []
+    tribes = generate_tribes regions attitude scarceness
   } in 
 
 
