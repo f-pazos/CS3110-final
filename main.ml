@@ -48,7 +48,8 @@ let print_region (s : state) r_str =
 (* [print_tribe s t_str] prints the details of tribe with name [t_str] and its
  * region in state [s]*)
 let print_tribe (s : state) t_str =
-  try let t = List.assoc t_str s.tribes in
+  let tribes_lower = List.map (fun (a, b) -> (String.lowercase_ascii a, b)) s.tribes in
+  try let t = List.assoc t_str tribes_lower in
   begin
     print_endline ("Name: "^t.name);
     print_endline ("Population: "^(string_of_int t.pop));
