@@ -77,6 +77,13 @@ let print_state s =
 let rec play_game s =
   display s;
   print_endline "Please enter a command.\n";
+  print_endline "Commands are:";
+  print_endline "Step to move forward 1 step";
+  print_endline "Step x to move forward x steps";
+  print_endline "View n or n to view tribe with name n";
+  print_endline "View all or status to view all tribes";
+  print_endline "Save f to save the state to file f";
+  print_endline "Quit to quit";
   print_string "> ";
   let player_command = match read_line () with
   | exception End_of_file -> game_problem_exit ()
@@ -116,6 +123,9 @@ let main () =
   print_endline "Please enter the name of the game file you want to load,";
   print_endline "or enter the parameters for a new game as";
   print_endline "size _ attitude _ scarceness _";
+  print_endline "size is the number of tribes";
+  print_endline "attitude is 0 for generous, 1 for neutral, and 2 for aggressive";
+  print_endline "scarceness is a number between 0 and 100";
   print_string  "> ";
   match read_line () with
   | exception End_of_file -> ()

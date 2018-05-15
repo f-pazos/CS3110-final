@@ -133,10 +133,10 @@ let parse_game str =
     then let file_name = Str.string_after str 5 in Save file_name
   else if Str.string_match (Str.regexp "quit") str1 0
     then Quit
-  else if Str.string_match (Str.regexp "step ") str1 0
+  else if Str.string_match (Str.regexp "step") str1 0
     then try
       let step_num = int_of_string (Str.string_after str1 5) in Step step_num
-    with _ -> View str1
+    with _ -> Step 1
   else if Str.string_match (Str.regexp "view ") str1 0
     then let tribe_name = Str.string_after str1 5 in View tribe_name
   else View str1
