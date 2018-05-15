@@ -1,132 +1,132 @@
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:0:metabolize 1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:0:metabolize 1 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:0:metabolize 1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:1:metabolize 2.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:1:metabolize 2 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:1:metabolize 2.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:2:metabolize 3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:2:metabolize 3 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:2:metabolize 3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:3:food 1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:3:food 1 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:3:food 1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:4:food 2.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:4:food 2 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:4:food 2.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:5:food 3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:5:food 3 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:5:food 3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:6:tools 1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Test State test suite:6:tools 1 has failed.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: not equal in test State test suite:6:tools 1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Called from unknown location
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: 
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:6:tools 1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:7:tools 2.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Test State test suite:7:tools 2 has failed.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: not equal in test State test suite:7:tools 2.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Called from unknown location
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: 
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:7:tools 2.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:8:tools 3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Test State test suite:8:tools 3 has failed.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: not equal in test State test suite:8:tools 3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Called from unknown location
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: 
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:8:tools 3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:9:weapons 1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Test State test suite:9:weapons 1 has failed.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: not equal in test State test suite:9:weapons 1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Called from unknown location
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: 
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:9:weapons 1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:10:weapons 2.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Test State test suite:10:weapons 2 has failed.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: not equal in test State test suite:10:weapons 2.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Called from unknown location
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: 
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:10:weapons 2.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:11:weapons 3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Test State test suite:11:weapons 3 has failed.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: not equal in test State test suite:11:weapons 3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Called from unknown location
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: 
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:11:weapons 3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:12:gift 1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Test State test suite:12:gift 1 has failed.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: not equal in test State test suite:12:gift 1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Called from unknown location
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: 
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:12:gift 1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:13:gift 2.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:13:gift 2 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:13:gift 2.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:14:gift 3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Test State test suite:14:gift 3 has failed.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: not equal in test State test suite:14:gift 3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Called from unknown location
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: 
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:14:gift 3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:15:gift 4.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:15:gift 4 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:15:gift 4.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:16:gift 5.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Test State test suite:16:gift 5 has failed.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: not equal in test State test suite:16:gift 5.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Called from unknown location
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: 
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:16:gift 5.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:17:gift 6.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Test State test suite:17:gift 6 has failed.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: not equal in test State test suite:17:gift 6.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: Called from unknown location
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 E: 
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:17:gift 6.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:18:attack1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:18:attack1 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:18:attack1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:19:attack2.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:19:attack2 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:19:attack2.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:20:attack3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:20:attack3 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:20:attack3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:21:attack4.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:21:attack4 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:21:attack4.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:22:attack5.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:22:attack5 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:22:attack5.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:23:attack6.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:23:attack6 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:23:attack6.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:24:attack7.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:24:attack7 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:24:attack7.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:25:attack8.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:25:attack8 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:25:attack8.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:26:attack9.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:26:attack9 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:26:attack9.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:27:attack10.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:27:attack10 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:27:attack10.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:28:attack11.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:28:attack11 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:28:attack11.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:29:attack12.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:29:attack12 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:29:attack12.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:30:decide 1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:30:decide 1 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:30:decide 1.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:31:decide 2.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:31:decide 2 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:31:decide 2.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:32:decide 3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:32:decide 3 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:32:decide 3.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Start test State test suite:33:step 0.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: Test State test suite:33:step 0 is successful.
-2018-05-15T18:41:01+00:00 vm3110-2018sp#01 I: End test State test suite:33:step 0.
+2018-05-15T19:12:56+00:00 vm3110-2018sp#01 I: Start test State test suite:0:metabolize 1.
+2018-05-15T19:12:56+00:00 vm3110-2018sp#01 I: Test State test suite:0:metabolize 1 is successful.
+2018-05-15T19:12:56+00:00 vm3110-2018sp#01 I: End test State test suite:0:metabolize 1.
+2018-05-15T19:12:56+00:00 vm3110-2018sp#01 I: Start test State test suite:1:metabolize 2.
+2018-05-15T19:12:56+00:00 vm3110-2018sp#01 I: Test State test suite:1:metabolize 2 is successful.
+2018-05-15T19:12:56+00:00 vm3110-2018sp#01 I: End test State test suite:1:metabolize 2.
+2018-05-15T19:12:56+00:00 vm3110-2018sp#01 I: Start test State test suite:2:metabolize 3.
+2018-05-15T19:12:56+00:00 vm3110-2018sp#01 I: Test State test suite:2:metabolize 3 is successful.
+2018-05-15T19:12:56+00:00 vm3110-2018sp#01 I: End test State test suite:2:metabolize 3.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:3:food 1.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:3:food 1 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:3:food 1.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:4:food 2.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:4:food 2 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:4:food 2.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:5:food 3.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:5:food 3 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:5:food 3.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:6:tools 1.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Test State test suite:6:tools 1 has failed.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: not equal in test State test suite:6:tools 1.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Called from unknown location
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: 
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:6:tools 1.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:7:tools 2.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Test State test suite:7:tools 2 has failed.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: not equal in test State test suite:7:tools 2.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Called from unknown location
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: 
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:7:tools 2.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:8:tools 3.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Test State test suite:8:tools 3 has failed.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: not equal in test State test suite:8:tools 3.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Called from unknown location
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: 
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:8:tools 3.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:9:weapons 1.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Test State test suite:9:weapons 1 has failed.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: not equal in test State test suite:9:weapons 1.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Called from unknown location
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: 
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:9:weapons 1.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:10:weapons 2.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Test State test suite:10:weapons 2 has failed.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: not equal in test State test suite:10:weapons 2.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Called from unknown location
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: 
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:10:weapons 2.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:11:weapons 3.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Test State test suite:11:weapons 3 has failed.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: not equal in test State test suite:11:weapons 3.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Called from unknown location
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: 
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:11:weapons 3.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:12:gift 1.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Test State test suite:12:gift 1 has failed.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: not equal in test State test suite:12:gift 1.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Called from unknown location
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: 
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:12:gift 1.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:13:gift 2.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:13:gift 2 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:13:gift 2.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:14:gift 3.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Test State test suite:14:gift 3 has failed.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: not equal in test State test suite:14:gift 3.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Called from unknown location
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: 
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:14:gift 3.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:15:gift 4.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:15:gift 4 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:15:gift 4.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:16:gift 5.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Test State test suite:16:gift 5 has failed.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: not equal in test State test suite:16:gift 5.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Called from unknown location
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: 
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:16:gift 5.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:17:gift 6.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Test State test suite:17:gift 6 has failed.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: not equal in test State test suite:17:gift 6.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: Called from unknown location
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 E: 
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:17:gift 6.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:18:attack1.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:18:attack1 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:18:attack1.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:19:attack2.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:19:attack2 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:19:attack2.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:20:attack3.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:20:attack3 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:20:attack3.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:21:attack4.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:21:attack4 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:21:attack4.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:22:attack5.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:22:attack5 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:22:attack5.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:23:attack6.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:23:attack6 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:23:attack6.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:24:attack7.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:24:attack7 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:24:attack7.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:25:attack8.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:25:attack8 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:25:attack8.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:26:attack9.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:26:attack9 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:26:attack9.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:27:attack10.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:27:attack10 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:27:attack10.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:28:attack11.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:28:attack11 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:28:attack11.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:29:attack12.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:29:attack12 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:29:attack12.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:30:decide 1.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:30:decide 1 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:30:decide 1.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:31:decide 2.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:31:decide 2 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:31:decide 2.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:32:decide 3.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:32:decide 3 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:32:decide 3.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Start test State test suite:33:step 0.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: Test State test suite:33:step 0 is successful.
+2018-05-15T19:12:57+00:00 vm3110-2018sp#01 I: End test State test suite:33:step 0.
