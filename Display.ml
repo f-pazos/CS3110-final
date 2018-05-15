@@ -45,6 +45,198 @@ let com p: (int*int)=
   ( (!x_sum) / n, (!y_sum) / n)
 
 
+let draw_icon_circle x y w =  
+  set_color white;
+  fill_circle (x+w/2) (y+w/2) (w/2);
+  set_color black;
+  draw_circle  (x+w/2) (y+w/2) (w/2)
+
+(* Draws a food icon with lower left corner at (x,y), with width of w. *)
+let draw_food_icon x y w =
+
+  draw_icon_circle x y w; 
+
+  set_color yellow;
+  fill_ellipse (x+w/2) (y+w/2) (w/7) (w*3/8);
+  set_color black;
+  draw_ellipse (x+w/2) (y+w/2) (w/7) (w*3/8);
+
+  set_color green;
+
+  let leaves = [| ( (x+w/2),(y+w/4+w/8) );
+                ( (x+w/2 + w/4), (y+w/2+w/8) );
+                ( (x+w/2),(y+ w/12) );
+                ( (x+w/2 - w/4), (y+w/2+w/8) ) |] in 
+
+  fill_poly leaves;
+  set_color black;
+  draw_poly leaves
+
+(* Draws a tool icon with lower left corner at (x,y) with width of w. *)
+let draw_tool_icon x y w = 
+  draw_icon_circle x y w; 
+
+  (* centers *)
+  let xc = x+w/2 in 
+  let yc = y+w/2 in 
+
+  let handle = [| ( (xc-w/16), (y+w/6) );
+                  ( (xc-w/16), (y+5*w/6) );
+                  ( (xc+w/16), (y+5*w/6) );
+                  ( (xc+w/16), (y+w/6) ) |] in 
+
+  let stone = [| ( (x+w/5), (y+13*w/16) );
+                 ( (x+w/5), (y+5*w/8) );
+                 ( (x+4*w/5), (y+5*w/8) );
+                 ( (x+4*w/5), (y+13*w/16) ) |] in 
+  (* brown *)
+  set_color 0x542d05;
+  fill_poly handle;
+  set_color black;
+  draw_poly handle;
+
+  (* gray *)
+  set_color 0xa5a4a4;
+  fill_poly stone;
+  set_color black;
+  draw_poly stone
+
+(* Draws a weapon icon with lower left corner at (x,y) with width of w. *)
+let draw_weapon_icon x y w = 
+  draw_icon_circle x y w;
+
+  let xc = x+w/2 in 
+  let yc = y+w/2 in 
+
+  let x_handle_l = xc-w/16 in 
+  let x_handle_r = xc+w/16 in 
+  let x_leftmost = x+w/3 in 
+  let x_rightmost = x+2*w/3 in 
+
+  let y_handle_top = yc-w/6 in 
+  let y_handle_mid = yc-w/6-w/16 in 
+  let y_handle_bot = y+w/16 in 
+
+  let handle = [| (x_handle_l, y_handle_bot); 
+                  (x_handle_l, y_handle_mid);
+                  (x_leftmost, y_handle_mid);
+                  (x_leftmost, y_handle_top);
+                  (x_rightmost, y_handle_top);
+                  (x_rightmost, y_handle_mid);
+                  (x_handle_r, y_handle_mid);
+                  (x_handle_r, y_handle_bot) |] in 
+  
+  let blade = [| (x_handle_l, y_handle_top); 
+                 (xc-w/8, yc+w/4);
+                 (xc, y+w-w/16);
+                 (xc+w/8, yc+w/4);
+                 (x_handle_r, y_handle_top) |] in 
+
+  (* brown *)
+  set_color 0x542d05; 
+  fill_poly handle; 
+  set_color black;
+  draw_poly handle;
+
+  (* gray *)
+  set_color 0xa5a4a4;
+  fill_poly blade;
+  set_color black;
+  draw_poly blade
+
+(* Draws an attack icon with lower left corner at (x,y) with width of w. *)
+let draw_attack_icon x y w = 
+  draw_icon_circle x y w; 
+
+  let xc = x+w/2 in 
+  let yc = y+w/2 in
+
+  set_color black; 
+  
+  let  handle = [| 
+              (x+6*w/16), (y+5*w/16);
+              (x+4*w/16, y+3*w/16);
+              (x+3*w/16, y+4*w/16);
+              (x+5*w/16, y+6*w/16);
+              (x+9*w/16, y+4*w/16);
+              (x+8*w/16, y+3*w/16);
+              (x+3*w/16, y+8*w/16);
+              (x+4*w/16, y+9*w/16)
+               |] in
+
+  let blade = [| (x+5*w/16, y+6*w/16);
+                 (x+6*w/16, y+5*w/16); 
+                 (xc+w/8+w/16, yc+w/8-w/16);
+                 (xc+w/4, yc+w/4);
+                 (xc+w/8-w/16, yc+w/8+w/16)
+                  |] in 
+
+
+  (* attack lines *)
+  moveto (x+w/4) (y+3*w/4);
+  lineto (xc-w/8) (yc+w/8);
+
+  moveto (x+w/4+w/16) (y+3*w/4+w/16);
+  lineto (xc-w/8+w/16) (yc+w/8);
+
+  moveto (x+w/4+2*w/16) (y+3*w/4+2*w/16);
+  lineto (xc-w/8+w/7) (yc+w/8+w/32);
+
+  (* gray *)
+  set_color 0xa5a4a4;
+  fill_poly blade;
+  set_color black;
+  draw_poly blade;
+
+  (* brown *)
+  set_color 0x542d05; 
+  fill_poly handle;
+  set_color black;
+  draw_poly handle
+
+
+(* Draws a gift icon with lower left corner at (x,y) with width of w. *)
+let draw_gift_icon x y w = 
+  draw_icon_circle x y w;
+
+  let xc = x+w/2 in 
+  let yc = y+w/2 in 
+
+  (* Bottom of gift box *)
+  set_color red;
+  fill_rect (x+w/5) (y+w/5) (3*w/5) (3*w/8);
+  set_color black;
+  draw_rect (x+w/5) (y+w/5) (3*w/5) (3*w/8);
+
+  (* top of gift box *)
+  set_color red;
+  fill_rect (x+w/7) (yc + 3*w/40) (5*w/7) (7*w/40);
+  set_color black;
+  draw_rect (x+w/7) (yc + 3*w/40) (5*w/7) (7*w/40);
+
+  (* green stripe *)
+  set_color green;
+  fill_rect (xc-w/12) (y+w/5) (w/6) (3*w/4 - w/5);
+  set_color black;
+  draw_rect (xc-w/12) (y+w/5) (w/6) (3*w/4 - w/5);
+
+  (* green bow *)
+  let bow = [| (xc, y + 3*w/4); 
+               (xc-w/4, y + 3*w/4+w/16); 
+               (xc-w/6, y + 3*w/4+w/6);
+               (xc, y + 3*w/4); 
+               (xc+w/16, y+15*w/16);
+               (xc+3*w/16, y+13*w/16)  
+            |] in 
+
+  set_color green;
+  fill_poly bow;
+  set_color black;
+  draw_poly bow
+
+
+
+
 (* [display st] provides a graphic representation for [st]. *)
 let display (st:state) = 
   let rec poly_helper regs = match regs with 
@@ -85,7 +277,7 @@ let display (st:state) =
       tribe_helper tl regs (y-40)
     end in
 
-  let rec draw_overlay regs = match regs with 
+  let rec draw_names regs = match regs with 
     | [] -> ()
     | (n, r)::t -> begin
         let (xcom, ycom) = com r.polygon in 
@@ -105,18 +297,22 @@ let display (st:state) =
 
         set_color (text_color (r.base_color));
         draw_string r.name;
-
-        (* Draw info overlay *)
-
-        let (xover, yover) = (xcom - 15, ycom - 50) in 
-        set_color r.base_color;
-        fill_rect xover yover 30 30;
-        set_color (text_color (r.base_color));
-        draw_rect xover yover 30 30;
-
-        draw_overlay t
-
+        draw_names t
       end in 
+
+  let rec draw_icons regs = match regs with 
+    | [] -> ()
+    | (n ,r)::t -> begin
+        let (xcom, ycom) = com r.polygon in 
+
+        let w = 30 in 
+        draw_tool_icon (xcom-w/2) (ycom-w/2-w) w;
+        draw_icons t
+      end in
+
+
+    
+
 
   let draw_legend = 
     set_color black; 
@@ -135,7 +331,8 @@ let display (st:state) =
   set_color black;
   poly_helper st.regions;
   tribe_helper st.tribes st.regions (win_h-10);
-  draw_overlay st.regions;
+  draw_names st.regions;
+  draw_icons st.regions;
   draw_legend
 
 

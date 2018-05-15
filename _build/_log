@@ -1,55 +1,16 @@
 ### Starting build.
-<<<<<<< HEAD
 # Target: test.ml.depends, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), extension:ml, file:test.ml, ocaml, ocamldep, quiet, traverse, use_menhir }
-ocamlfind ocamldep -package oUnit -package str -package graphics -package yojson -package ANSITerminal -modules test.ml > test.ml.depends
-=======
-# Target: guimain.ml.depends, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), extension:ml, file:guimain.ml, ocaml, ocamldep, quiet, traverse, use_menhir }
-ocamlfind ocamldep -package oUnit -package str -package graphics -package yojson -package ANSITerminal -modules guimain.ml > guimain.ml.depends # cached
-# Target: Display.mli.depends, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), extension:mli, file:Display.mli, ocaml, ocamldep, quiet, traverse, use_menhir }
-ocamlfind ocamldep -package oUnit -package str -package graphics -package yojson -package ANSITerminal -modules Display.mli > Display.mli.depends # cached
->>>>>>> 9cea24668a6d88b27b3809b3663d927097a6e3ff
+ocamlfind ocamldep -package oUnit -package str -package graphics -package yojson -package ANSITerminal -modules test.ml > test.ml.depends # cached
 # Target: state.mli.depends, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), extension:mli, file:state.mli, ocaml, ocamldep, quiet, traverse, use_menhir }
 ocamlfind ocamldep -package oUnit -package str -package graphics -package yojson -package ANSITerminal -modules state.mli > state.mli.depends # cached
 # Target: state.cmi, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), byte, compile, extension:mli, file:state.mli, interf, ocaml, quiet, traverse, use_menhir }
 ocamlfind ocamlc -c -package oUnit -package str -package graphics -package yojson -package ANSITerminal -o state.cmi state.mli # cached
-<<<<<<< HEAD
 # Target: test.cmo, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), byte, compile, extension:cmo, extension:ml, file:test.cmo, file:test.ml, implem, ocaml, quiet, traverse, use_menhir }
-ocamlfind ocamlc -c -package oUnit -package str -package graphics -package yojson -package ANSITerminal -o test.cmo test.ml
-=======
-# Target: Display.cmi, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), byte, compile, extension:mli, file:Display.mli, interf, ocaml, quiet, traverse, use_menhir }
-ocamlfind ocamlc -c -package oUnit -package str -package graphics -package yojson -package ANSITerminal -o Display.cmi Display.mli # cached
-# Target: Generator.mli.depends, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), extension:mli, file:Generator.mli, ocaml, ocamldep, quiet, traverse, use_menhir }
-ocamlfind ocamldep -package oUnit -package str -package graphics -package yojson -package ANSITerminal -modules Generator.mli > Generator.mli.depends # cached
-# Target: Generator.cmi, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), byte, compile, extension:mli, file:Generator.mli, interf, ocaml, quiet, traverse, use_menhir }
-ocamlfind ocamlc -c -package oUnit -package str -package graphics -package yojson -package ANSITerminal -o Generator.cmi Generator.mli # cached
-# Target: guimain.cmo, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), byte, compile, extension:cmo, extension:ml, file:guimain.cmo, file:guimain.ml, implem, ocaml, quiet, traverse, use_menhir }
-ocamlfind ocamlc -c -package oUnit -package str -package graphics -package yojson -package ANSITerminal -o guimain.cmo guimain.ml # cached
-# Target: Display.ml.depends, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), extension:ml, file:Display.ml, ocaml, ocamldep, quiet, traverse, use_menhir }
-ocamlfind ocamldep -package oUnit -package str -package graphics -package yojson -package ANSITerminal -modules Display.ml > Display.ml.depends
-# Target: Generator.ml.depends, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), extension:ml, file:Generator.ml, ocaml, ocamldep, quiet, traverse, use_menhir }
-ocamlfind ocamldep -package oUnit -package str -package graphics -package yojson -package ANSITerminal -modules Generator.ml > Generator.ml.depends # cached
-# Target: Polygon_Generator.mli.depends, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), extension:mli, file:Polygon_Generator.mli, ocaml, ocamldep, quiet, traverse, use_menhir }
-ocamlfind ocamldep -package oUnit -package str -package graphics -package yojson -package ANSITerminal -modules Polygon_Generator.mli > Polygon_Generator.mli.depends # cached
-# Target: Polygon_Generator.cmi, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), byte, compile, extension:mli, file:Polygon_Generator.mli, interf, ocaml, quiet, traverse, use_menhir }
-ocamlfind ocamlc -c -package oUnit -package str -package graphics -package yojson -package ANSITerminal -o Polygon_Generator.cmi Polygon_Generator.mli # cached
-# Target: Generator.cmo, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), byte, compile, extension:cmo, extension:ml, file:Generator.cmo, file:Generator.ml, implem, ocaml, quiet, traverse, use_menhir }
-ocamlfind ocamlc -c -package oUnit -package str -package graphics -package yojson -package ANSITerminal -o Generator.cmo Generator.ml # cached
-# Target: Display.cmo, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), byte, compile, extension:cmo, extension:ml, file:Display.cmo, file:Display.ml, implem, ocaml, quiet, traverse, use_menhir }
-ocamlfind ocamlc -c -package oUnit -package str -package graphics -package yojson -package ANSITerminal -o Display.cmo Display.ml
->>>>>>> 9cea24668a6d88b27b3809b3663d927097a6e3ff
+ocamlfind ocamlc -c -package oUnit -package str -package graphics -package yojson -package ANSITerminal -o test.cmo test.ml # cached
 # Target: state.ml.depends, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), extension:ml, file:state.ml, ocaml, ocamldep, quiet, traverse, use_menhir }
 ocamlfind ocamldep -package oUnit -package str -package graphics -package yojson -package ANSITerminal -modules state.ml > state.ml.depends # cached
 # Target: state.cmo, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), byte, compile, extension:cmo, extension:ml, file:state.cmo, file:state.ml, implem, ocaml, quiet, traverse, use_menhir }
 ocamlfind ocamlc -c -package oUnit -package str -package graphics -package yojson -package ANSITerminal -o state.cmo state.ml # cached
-<<<<<<< HEAD
 # Target: test.byte, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), byte, dont_link_with, extension:byte, file:test.byte, link, ocaml, program, quiet, traverse, use_menhir }
-ocamlfind ocamlc -linkpkg -package oUnit -package str -package graphics -package yojson -package ANSITerminal state.cmo test.cmo -o test.byte
-=======
-# Target: Polygon_Generator.ml.depends, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), extension:ml, file:Polygon_Generator.ml, ocaml, ocamldep, quiet, traverse, use_menhir }
-ocamlfind ocamldep -package oUnit -package str -package graphics -package yojson -package ANSITerminal -modules Polygon_Generator.ml > Polygon_Generator.ml.depends # cached
-# Target: Polygon_Generator.cmo, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), byte, compile, extension:cmo, extension:ml, file:Polygon_Generator.cmo, file:Polygon_Generator.ml, implem, ocaml, quiet, traverse, use_menhir }
-ocamlfind ocamlc -c -package oUnit -package str -package graphics -package yojson -package ANSITerminal -o Polygon_Generator.cmo Polygon_Generator.ml # cached
-# Target: guimain.byte, tags: { package(ANSITerminal), package(graphics), package(oUnit), package(str), package(yojson), byte, dont_link_with, extension:byte, file:guimain.byte, link, ocaml, program, quiet, traverse, use_menhir }
-ocamlfind ocamlc -linkpkg -package oUnit -package str -package graphics -package yojson -package ANSITerminal state.cmo Display.cmo Polygon_Generator.cmo Generator.cmo guimain.cmo -o guimain.byte
->>>>>>> 9cea24668a6d88b27b3809b3663d927097a6e3ff
+ocamlfind ocamlc -linkpkg -package oUnit -package str -package graphics -package yojson -package ANSITerminal state.cmo test.cmo -o test.byte # cached
 # Compilation successful.
