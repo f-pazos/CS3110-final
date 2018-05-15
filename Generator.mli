@@ -24,7 +24,6 @@ type outline = {size : int; points : point array; sides : side array}
 
 
 (* A type that outlines a "map" object. 
- * - [border] : maintains the border of the map. 
  * - [regions] : maintains the individual borders of the regions of this map. 
  *
  * RI: A valid map object satisfies the following conditions: 
@@ -37,11 +36,10 @@ type outline = {size : int; points : point array; sides : side array}
  * regions are considered adjacent. 
  * 
  * 3 : A map m's border is exactly encompassing. What this means is that for 
- * every point p in m, p must be bound by [border]. Further, p is either
+ * every point p in m, p is either
  * in exactly 1 region OR on the border of 2 regions OR exactly at the 
- * intersection of  regions. Lastly, every point p in every r in [regions]
- * is either on or bound by [border]. *)
-type world = {size : int; border: outline; regions: outline array}
+ * intersection of  regions. *)
+type world = {size : int; regions: outline array}
 
 (* [generate_state size attitude scarceness] Creates a new world based off of
  * the parameters given. [size] determines how many tribes there are, [attitude] * is a measure of how aggressive or generous tribes will be, and [scarceness]

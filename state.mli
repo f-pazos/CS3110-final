@@ -3,7 +3,8 @@ type region = {
   area : int;
   climate : float;
   neighbors : (string * float) list;
-  polygon : (int * int) array 
+  polygon : (int*int) array;
+  base_color : int
 }
 
 type attd = Generous | Neutral | Aggressive

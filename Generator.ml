@@ -1,5 +1,6 @@
 open State
 open Graphics
+open Polygon_Generator
 
 (*****************************************************************************)
 (* POINT and related functions                                               *)
@@ -33,7 +34,7 @@ let neighbors o1 o2 = true
 (*****************************************************************************)
 (* WORLD and related functions                                               *)
 (*****************************************************************************)
-type world = {size: int; border: outline; regions: outline array} 
+type world = {size: int; regions: outline array} 
 
 (* TODO 0 : rep_ok's *)
 let repok_outline out = ()
@@ -43,8 +44,21 @@ let repok_world w = ()
 (* [polygon_of_outline out] creates a Graphics.polygon out of a given outline *)
 let polygon_of_outline out = out.points
 
+
 (* [outline_of_polygon poly] creates an outline of the Graphics.polygon poly. *)
-let outline_of_polygon poly = {size = 0; points = [||]; sides = [||] }
+let outline_of_polygon poly = 
+ 
+  let n = Array.length poly in 
+  let new_sides = Array.make n ( (0,0), (0,0) ) in
+
+  for i=0 to n-1 do 
+    new_sides.(i) <- (poly.(i), poly.((i+1) mod n ))
+  done;
+
+
+  {size = Array.length poly; 
+   points = poly;
+   sides = new_sides}
 
 (*TODO : test [area_of_outline] and [len_border] *)
 (* [area_of_outline o] returns the area of outline o. *) 
@@ -118,14 +132,21 @@ let generate_neighbors names outline m : (string*float) list =
 
 (* [generate_map w h n] Creates a map with outline that is the rectangle from 
  * (0,0) to (w,h) with [n] disctint regions *)
-let generate_map w h n  = failwith "Unimplemented"
+let generate_map w h n  = 
+ 
+  (* Create the outlines from polygons *)
+  let outlines = generate_polys w h n |> Array.map (outline_of_polygon) in 
+
+  print_endline (string_of_int (Array.length outlines));
+  {size = Array.length outlines; regions = outlines}
+
 
 
 (*TODO : test *)
 (* [generate_regions n] Creates the regions object for the initial state. *)
-let generate_regions n w h : (string * State.region) list = 
+let generate_regions w h n : (string * State.region) list = 
   (* Generate a map *)
-  let m = generate_map n w h in
+  let m = generate_map w h n in
 
   (* Generate a bunch of names *)
   let names = generate_names n in 
@@ -141,7 +162,9 @@ let generate_regions n w h : (string * State.region) list =
               area = int_of_float (area_of_outline o);
               climate = Random.float 10.0; (*TODO balance this*)
               neighbors = generate_neighbors names o m; 
-              polygon = o.points })::(!regs) 
+              polygon = o.points;
+              base_color = Random.int 0xFFFFFF
+              })::(!regs) 
   done;
   (!regs)
 
@@ -149,8 +172,12 @@ let generate_regions n w h : (string * State.region) list =
 (* [generate_tribes regs] Creates the tribes for a given map regs. *)
 let generate_tribes regs  = []
 
-(* TODO : fix this *)
-let generate_state size attitude scarceness = failwith "Unimplemented"
+(* [generate_state size attitude scarceness] Generates a starting state. *)
+let generate_state size attitude scarceness = 
+  { 
+    regions = generate_regions 800 800 size;
+    tribes = []
+  }
 
 let save_state file st = failwith "Uniplemented"
 

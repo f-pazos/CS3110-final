@@ -1,7 +1,7 @@
 test:
 	ocamlbuild -use-ocamlfind test.byte && ./test.byte
 ui:
-	ocamlbuild -use-ocamlfind graphics_sandbox.byte && ./graphics_sandbox.byte
+	ocamlbuild -use-ocamlfind guimain.byte && ./guimain.byte
 
 check:
 	bash checkenv.sh && bash checktypes.sh
