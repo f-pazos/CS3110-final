@@ -6,7 +6,6 @@ open Polygon_Generator
 (* POINT and related functions                                               *)
 (*****************************************************************************)
 type point = int * int
-
 (* [distance p0 p1] returns the cartesian distance between p0 and p1. *)
 let distance (x0, y0) (x1, y1) : float = ( (float_of_int (x0-x1))**2.0 +. (float_of_int(y0-y1))**2.0)**0.5
 
@@ -251,10 +250,3 @@ let generate_state size attitude scarceness =
 
   print_regs st0.regions; 
   st0
-
-
-
-
-let save_state file st = failwith "Uniplemented"
-
-let load_state file = failwith "Unimplemented"

@@ -23,10 +23,10 @@ type side = point * point
 type outline = {size : int; points : point array; sides : side array}
 
 
-(* A type that outlines a "map" object. 
- * - [regions] : maintains the individual borders of the regions of this map. 
+(* A type that outlines a "world" object. 
+ * - [regions] : maintains the individual borders of the regions in the world. 
  *
- * RI: A valid map object satisfies the following conditions: 
+ * RI: A valid world object satisfies the following conditions: 
  * 
  * 1 : All map regions are mutually exclusive. This means no two regions may 
  * overlap. That is, if regions r1 and r2 both bound a point p, then r1=r2. 
@@ -35,8 +35,8 @@ type outline = {size : int; points : point array; sides : side array}
  * ONLY be found in the border, or be found in exactly two regions. These two
  * regions are considered adjacent. 
  * 
- * 3 : A map m's border is exactly encompassing. What this means is that for 
- * every point p in m, p is either
+ * 3 : A map m's border is exactly encompassing. What is meant by this is
+ * that for every point p in m, p is either
  * in exactly 1 region OR on the border of 2 regions OR exactly at the 
  * intersection of  regions. *)
 type world = {size : int; regions: outline array}
@@ -47,12 +47,3 @@ type world = {size : int; regions: outline array}
 *)
 val generate_state : int -> int -> int -> state 
 
-(* [save_state filename state] Saves [state] as a json object in [filename]. 
-   - raises: FileError if saving failed. 
-*)
-val save_state : string -> state -> unit
-
-(* [load_state filename] Tries to load in a state from file [filename]. 
-   - raies: FileNotFound if file doesn't exist. 
-*)
-val load_state : string -> state
