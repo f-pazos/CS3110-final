@@ -77,7 +77,11 @@ let decide s name =
   let t = assoc name s.tribes in
   let r = assoc name s.regions in
   let food_des =
-    let food_mult = if t.food < t.pop then 3 else 1 in
+    let food_mult = begin 
+    if t.food < t.pop then 2 
+    else if (float(t.pop) > (float(r.area) *. 0.6)) then 0
+    else 1
+    end in
     truncate (float ((t.pop/(max 1 t.food)) * (food_mult)) *. r.climate)
   in
   let tools_des =
@@ -119,7 +123,7 @@ let decide s name =
  * is (food + 3*population + 6*popwtools) * climate
  * tools decreases by floor(popwtools/4) *)
 let do_food s t r popwtools =
-  let f = truncate (float (t.food + ((3 * t.pop) + (6 * popwtools))) *. r.climate) in
+  let f = truncate (float (t.food + ((2 * t.pop) + (2 * popwtools))) *. r.climate) in
   let food' = min f r.area in
   let tools' = t.tools - (popwtools/4) in
   let t' = {t with food = food'; tools = tools'} in
@@ -236,9 +240,9 @@ let metabolize t:tribe =
   in
   let pop' =
     if t.food < t.pop then
-      t.pop - ((t.pop - t.food) / 3)
+      t.pop - ((t.pop - t.food) / 10)
     else if t.food = t.pop then t.pop
-    else t.pop + ((t.food - t.pop) / 3)
+    else t.pop + ((t.food - t.pop) / 5)
   in
   {t with pop = pop'; food = food'}
 
