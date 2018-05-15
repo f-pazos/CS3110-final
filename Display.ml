@@ -1,6 +1,5 @@
 open Graphics
 open State
-open Generator
 
 
 let win_w = 1000
@@ -32,7 +31,7 @@ let com (o:outline): (int*int)=
 *)
 
 (* [display st] provides a graphic representation for [st]. *)
-let display st = 
+let display (st:state) = 
   let rec poly_helper regs = match regs with 
     | [] -> ()
     | (_, h)::t -> begin

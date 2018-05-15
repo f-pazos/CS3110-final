@@ -25,7 +25,7 @@ let adj_sides (p1, p2)  (p3, p4)  =
 (*****************************************************************************)
 type outline = {size: int; points : point array; sides : side array}
 
-(* TODO : t*)
+(* TODO : test*)
 (* [neighbors o1 o2] Returns true if outlines [o1] and [o2] share at least
  * one side, but not all sides.  *)
 let neighbors o1 o2 = 
@@ -122,7 +122,7 @@ let len_border (out1:outline) (out2:outline) : float =
 
 
 
-(*TODO : Implement names from text file here.*) 
+(*TODO : Test a few times. *) 
 (* [generate_names n] randomly generates a list of [n] strings representing
  * the names of the regions *)
 let rec generate_names n : string array = 
@@ -142,6 +142,7 @@ let rec generate_names n : string array =
     
     let result = Array.make n "" in 
 
+    (* Randomly choose n strings from [names] *)
     for i = 0 to n-1 do 
       result.(i) <- names.(Random.int (Array.length names))
     done;
