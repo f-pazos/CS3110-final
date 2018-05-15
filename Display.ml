@@ -78,7 +78,6 @@ let draw_tool_icon x y w =
 
   (* centers *)
   let xc = x+w/2 in 
-  let yc = y+w/2 in 
 
   let handle = [| ( (xc-w/16), (y+w/6) );
                   ( (xc-w/16), (y+5*w/6) );
@@ -234,8 +233,19 @@ let draw_gift_icon x y w =
   set_color black;
   draw_poly bow
 
+(* Draws an arros from [r1] to [r2] in color [c]. Uses [st] to find 
+ * coordinates, etc. *)
+let draw_arrow c r1 r2 st = 
+  let (x1, y1) = com (List.assoc r1 st.regions).polygon in
+  let (x2, y2) = com (List.assoc r2 st.regions).polygon in 
 
-
+  set_line_width 10;
+  moveto x1 y1;
+  lineto x2 y2;
+                 
+  ()
+  
+  
 
 (* [display st] provides a graphic representation for [st]. *)
 let display (st:state) = 
@@ -300,18 +310,39 @@ let display (st:state) =
         draw_names t
       end in 
 
-  let rec draw_icons regs = match regs with 
+  let rec draw_icons regs st = match regs with 
     | [] -> ()
     | (n ,r)::t -> begin
         let (xcom, ycom) = com r.polygon in 
-
+        let action = (List.assoc n st.tribes).last_action in 
         let w = 30 in 
-        draw_tool_icon (xcom-w/2) (ycom-w/2-w) w;
-        draw_icons t
+
+        (* Bottom left corner of icon *)
+        let (x,y) = (xcom-w/2, ycom-w/2-w) in 
+        (match action with 
+          | Food -> draw_food_icon x y w;
+          | Tools -> draw_tool_icon x y w;
+          | Weapons -> draw_weapon_icon x y w;
+          | Attack _ -> draw_attack_icon x y w;
+          | Gift _ -> draw_attack_icon x y w);
+        
+
+        draw_icons t st
+
       end in
 
 
-    
+  (* Draws arrows to and from regions for gifts and attacks *)
+  let rec draw_arrows regs st = match regs with 
+    | [] -> () 
+    | (n, r)::t -> begin
+        let action = (List.assoc n st.tribes).last_action in 
+        (match action with 
+         | Attack other -> draw_arrow red n other st
+         | Gift (other,_) -> draw_arrow green n other st
+         | _ -> () );
+        draw_arrows t st
+      end in 
 
 
   let draw_legend = 
@@ -331,8 +362,9 @@ let display (st:state) =
   set_color black;
   poly_helper st.regions;
   tribe_helper st.tribes st.regions (win_h-10);
+  draw_arrows st.regions st;
+  draw_icons st.regions st;
   draw_names st.regions;
-  draw_icons st.regions;
   draw_legend
 
 
