@@ -41,7 +41,7 @@ type outline = {size : int; points : point array; sides : side array}
  * in exactly 1 region OR on the border of 2 regions OR exactly at the 
  * intersection of  regions. Lastly, every point p in every r in [regions]
  * is either on or bound by [border]. *)
-type map = {size : int; border: outline; regions: outline array}
+type world = {size : int; border: outline; regions: outline array}
 
 (* [generate_state size attitude scarceness] Creates a new world based off of
  * the parameters given. [size] determines how many tribes there are, [attitude] * is a measure of how aggressive or generous tribes will be, and [scarceness]
