@@ -3,9 +3,6 @@ test:
 ui:
 	ocamlbuild -use-ocamlfind guimain.byte && ./guimain.byte
 
-check:
-	bash checkenv.sh && bash checktypes.sh
-
 clean:
 	ocamlbuild -clean
 
