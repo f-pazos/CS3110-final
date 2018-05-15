@@ -71,11 +71,11 @@ let print_state s =
   let rec print_tribes_remaining t_list =
   match t_list with
   | [] -> ()
-  | (name, tribe)::tl -> print_tribe s name; print_tribes_remaining tl
+  | (name, tribe)::tl -> print_tribe s name; print_endline ""; print_tribes_remaining tl
   in print_tribes_remaining s.tribes
 
 let rec play_game s =
-  (*TODO: map/display parts*)
+  display s;
   print_endline "Please enter a command.\n";
   print_string "> ";
   let player_command = match read_line () with
@@ -99,12 +99,14 @@ let start_game start_command = match start_command with
   | Filename f ->
     begin
       let s = try read_state f with _ -> file_problem_exit () in
+      display_init ();
       play_game s
     end
   | Params (size, attitude, scarceness) ->
     begin
       let s = try generate_state size attitude scarceness
       with _ -> game_problem_exit () in
+      display_init ();
       play_game s
     end
 
