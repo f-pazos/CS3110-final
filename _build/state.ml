@@ -67,11 +67,7 @@ let most_liked o =
   fst (find (fun x -> snd x = (max_opin o (-100))) o)
 
 (* [decide s name] is the [action] that tribe with name [name] will do, given
-<<<<<<< HEAD
  * the state [s] of the simulation. The action the results is that which has
-=======
- * the state [s] of the simulation. The action the results is that which has 
->>>>>>> 9cea24668a6d88b27b3809b3663d927097a6e3ff
  * the highest "desireability" to the tribe *)
 let decide s name =
   let t = assoc name s.tribes in
@@ -108,7 +104,7 @@ let decide s name =
   else if most = attack_des then
     Attack(most_hated t.opins)
   else begin
-    let food_gift = min 0 ((t.food - t.pop)/3) in
+    let food_gift = max 0 ((t.food - t.pop)/3) in
     Gift((most_liked t.opins),food_gift)
   end
 
@@ -134,11 +130,7 @@ let do_tools s t  =
   let tribes' = (t.name, t')::(remove_assoc t.name s.tribes) in
   {s with tribes = tribes'}
 
-<<<<<<< HEAD
 (* [do_weapons s t popwtools] is the state after
-=======
-(* [do_weapons s t popwtools] is the state after 
->>>>>>> 9cea24668a6d88b27b3809b3663d927097a6e3ff
  * popwtools is min(t.pop, t.tools)*)
 (* formula: weapons increases by floor(popwtools/2), tools decreases by floor(popwtools/3) *)
 let do_weapons s t popwtools =
@@ -158,13 +150,8 @@ let do_attack s t a_name =
     (float(t.pop + t_popwithweps)/. float(x.pop + x_popwithweps)) *.
       (float((Random.int 50) + 40)/.100.) in
   let x_success = (1./.t_success) in
-<<<<<<< HEAD
   let xpop' = max 0 (truncate (float(x.pop) -. float(t_popwithweps) *. t_success)) in
   let tpop' = max 0 (truncate (float(t.pop) -. float(x_popwithweps) *. x_success)) in
-=======
-  let xpop' = min 0 (truncate (float(x.pop) -. float(t_popwithweps) *. t_success)) in
-  let tpop' = min 0 (truncate (float(t.pop) -. float(x_popwithweps) *. x_success)) in
->>>>>>> 9cea24668a6d88b27b3809b3663d927097a6e3ff
   let food_stolen = min x.food (truncate(float(t.pop) *. t_success)) in
   let tfood' = t.food + food_stolen in
   let xfood' = max 0 (x.food - food_stolen) in

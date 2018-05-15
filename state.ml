@@ -104,7 +104,7 @@ let decide s name =
   else if most = attack_des then
     Attack(most_hated t.opins)
   else begin
-    let food_gift = min 0 ((t.food - t.pop)/3) in
+    let food_gift = max 0 ((t.food - t.pop)/3) in
     Gift((most_liked t.opins),food_gift)
   end
 
