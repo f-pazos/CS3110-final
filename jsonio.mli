@@ -1,3 +1,4 @@
+open State
 (* [save_state filename state] Saves [state] as a json object in [filename].
    - raises: FileError if saving failed.
 *)

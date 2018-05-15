@@ -1,5 +1,6 @@
 open State
 open Generator
+open Jsonio
 open Display
 open Command
 
@@ -86,7 +87,7 @@ let rec play_game s =
   | View x -> print_tribe s x; play_game s
   | Save x ->
     begin
-      try save_state x s
+      try write_state x s
       with _ (*FileError*) -> print_endline "Failed to save the state.";
       play_game s
     end
@@ -96,7 +97,7 @@ let rec play_game s =
 let start_game start_command = match start_command with
   | Filename f ->
     begin
-      let s = try load_state f with _ -> file_problem_exit () in
+      let s = try read_state f with _ -> file_problem_exit () in
       play_game s
     end
   | Params (size, attitude, scarceness) ->
