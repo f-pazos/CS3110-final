@@ -3,7 +3,9 @@ open State
 
 let debug_display = false 
 
-let win_w = 1100
+(* Window dimensions. Map has dimensions 800*800, tribe list has dim. 300*800, 
+ * and legend has dim 300*800. *)
+let win_w = 1400
 let win_h = 800
 
 (* TODO: Implement alter_color *)
@@ -97,7 +99,7 @@ let display (st:state) =
         (* Draw the text box and name. *)
         set_color r.base_color; 
         fill_rect (x-6) (y-5) (textw + 10) (texth + 10);
-        set_color black;
+        set_color (text_color (r.base_color));
         draw_rect (x-6) (y-5) (textw + 10) (texth + 10);
         moveto x y;
 
@@ -109,17 +111,32 @@ let display (st:state) =
         let (xover, yover) = (xcom - 15, ycom - 50) in 
         set_color r.base_color;
         fill_rect xover yover 30 30;
-        set_color black;
+        set_color (text_color (r.base_color));
         draw_rect xover yover 30 30;
 
         draw_overlay t
 
       end in 
 
+  let draw_legend = 
+    set_color black; 
+
+    (* Draw a dividing line *)
+    moveto 1100 800; 
+    lineto 1100 0;
+
+    let x_off = 1100 in 
+
+    let (legW, legH) = text_size "Legend" in 
+
+    moveto (x_off + ((300-legW)/2)) 750;
+    draw_string "Legend" in 
+
   set_color black;
   poly_helper st.regions;
   tribe_helper st.tribes st.regions (win_h-10);
-  draw_overlay st.regions
+  draw_overlay st.regions;
+  draw_legend
 
 
   
