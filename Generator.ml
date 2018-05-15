@@ -6,7 +6,6 @@ open Polygon_Generator
 (* POINT and related functions                                               *)
 (*****************************************************************************)
 type point = int * int
-
 (* [distance p0 p1] returns the cartesian distance between p0 and p1. *)
 let distance (x0, y0) (x1, y1) : float = ( (float_of_int (x0-x1))**2.0 +. (float_of_int(y0-y1))**2.0)**0.5
 
@@ -26,10 +25,37 @@ let adj_sides (p1, p2)  (p3, p4)  =
 (*****************************************************************************)
 type outline = {size: int; points : point array; sides : side array}
 
-(* TODO *)
+(* TODO : test*)
 (* [neighbors o1 o2] Returns true if outlines [o1] and [o2] share at least
  * one side, but not all sides.  *)
-let neighbors o1 o2 = true
+let neighbors o1 o2 = 
+  if o1 = o2 then false else 
+
+  let is_neighb = ref false in 
+
+  for i = 0 to o1.size - 1 do
+    (* Check if the side is in o2. *) 
+    let (p0, p1) = o1.sides.(i) in 
+    if Array.mem (p0, p1) o2.sides ||
+       Array.mem (p1, p0) o2.sides 
+    then 
+      is_neighb := true
+    else 
+      () 
+  done;
+
+  for i = 0 to o2.size - 1 do 
+    (* Check if the side is in o1. *)
+    let (p1, p0) = o2.sides.(i) in 
+    if Array.mem (p0, p1) o1.sides ||
+       Array.mem (p1, p0) o1.sides
+    then 
+      is_neighb := true
+    else 
+      ()
+  done;
+
+  (!is_neighb)
 
 (*****************************************************************************)
 (* WORLD and related functions                                               *)
@@ -40,7 +66,7 @@ type world = {size: int; regions: outline array}
 let repok_outline out = ()
 let repok_world w = ()
 
-(*TODO 1 : finish implementing [outline_of_polygon]. *)
+(*TODO t : test *)
 (* [polygon_of_outline out] creates a Graphics.polygon out of a given outline *)
 let polygon_of_outline out = out.points
 
@@ -96,15 +122,43 @@ let len_border (out1:outline) (out2:outline) : float =
 
 
 
-(*TODO : Implement names from text file here.*) 
+(*TODO : Test a few times. *) 
 (* [generate_names n] randomly generates a list of [n] strings representing
  * the names of the regions *)
 let rec generate_names n : string array = 
-  let arr = Array.make n "" in 
-  for i = 0 to n-1 do 
-    arr.(i) <- string_of_int n
-  done;
-  arr
+
+  (* Reads in names from "tribe_names.txt" and creates a list of strings. *)
+  let rec read_names ic acc = 
+    try 
+      let new_line = input_line ic in
+      read_names ic (new_line::acc)
+    with 
+        _ -> acc in 
+
+  try
+    let ic = open_in "tribe_names.txt" in 
+    let names = read_names ic [] |> Array.of_list in 
+
+    
+    let result = Array.make n "" in 
+
+    (* Randomly choose n strings from [names] *)
+    for i = 0 to n-1 do 
+      result.(i) <- names.(Random.int (Array.length names))
+    done;
+
+    (* We need to check that there are n unique names *)
+    let tbl = Hashtbl.create n in 
+    for i = 0 to n-1 do 
+      Hashtbl.add tbl result.(i) result.(i) 
+    done;
+
+    (* If the hashtbl is not of size n, then that means we accidentally
+     * grabbed two of the same name. In this case, we should regenerate *)
+    if Hashtbl.length tbl <> n then generate_names n else result
+  
+  with _ -> failwith "Error reading tribe_names.txt"
+
 
 (* TODO : test *)
 (* [generate_neighbors out regs] finds the ids of all of out's neighbors. 
@@ -168,17 +222,63 @@ let generate_regions w h n : (string * State.region) list =
   done;
   (!regs)
 
+(* [generate_opins nbrs] returns a [(string * int) list] representing
+ * the [nbrs] with the opinion set to 0 *)
+let rec generate_opins nbrs = 
+  match nbrs with
+  | [] -> []
+  | (id,_)::tl -> (id,0)::(generate_opins tl)
 
 (* [generate_tribes regs] Creates the tribes for a given map regs. *)
-let generate_tribes regs  = []
+let rec generate_tribes regs attd scr =
+  match regs with
+  | [] -> []
+  | (id,r)::tl -> begin
+    let popn = (Random.int 100) + 20 in
+    let rand = Random.int 100 in
+    let attd_ = begin 
+      if rand < 20 then (attd - 1)
+      else if rand > 80 then (attd + 1)
+      else attd
+      end in
+    (id,{
+      name = id;
+      pop = popn;
+      food = popn;
+      tools = 0;
+      weps = 0;
+      attd = begin
+        if ((attd_ = 0) || (attd_ = 3)) then Generous
+        else if (attd_ = 1) then Neutral
+        else Aggressive
+      end;
+      opins = generate_opins r.neighbors;
+      reg = id;
+    })::(generate_tribes tl attd scr)
+  end
 
 (* [generate_state size attitude scarceness] Generates a starting state. *)
 let generate_state size attitude scarceness = 
-  { 
-    regions = generate_regions 800 800 size;
-    tribes = []
-  }
+  let regions_ = generate_regions 800 800 size in
+  let st0 = { 
+    regions = regions_;
+    tribes = generate_tribes regions_ attitude scarceness
+  } in 
 
-let save_state file st = failwith "Uniplemented"
 
-let load_state file = failwith "Unimplemented"
+  (* TODO remove in final version *)
+  let rec print_neighbors n = match n with 
+    | [] -> () 
+    | (n, f)::t -> print_string (n ^ ", ") ;
+                   print_neighbors t in 
+
+  let rec print_regs regs = match regs with 
+    | [] -> ()
+    | (n, r)::t -> 
+      print_string (n ^ ": ");
+      print_neighbors r.neighbors;
+      print_endline "";
+      print_regs t in 
+
+  print_regs st0.regions; 
+  st0
