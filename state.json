@@ -1,0 +1,38 @@
+{
+"type": "region" ,
+"name": { "type": "string"},
+"area": { "type": "integer"},
+"climate": { "type": "float"},
+"type": "array",
+"neighbors" : {
+"name": {"type": "string"},
+"prox": {"type": "float"},
+}
+}
+{
+"type": "tribe",
+"name": { "type": "string"},
+"pop": {"type": "integer"},
+"food": {"type": "integer"},
+"tools": {"type": "integer"},
+"weps": {"type": "integer"},
+"attd": {"type": "attd"},
+"opins": {
+  "type": "array",
+  "name": {"type":"string"},
+  "op": {"type":"integer"},
+},
+"reg": {"type": "string"}
+{
+"type": "state",
+"type" : "array",
+"regions": {
+  "name": {"type" : "string"} ,
+  "region": {"type" : "region"},
+},
+"type" : "array",
+"tribes" : {
+  "name": {"type" : "string"} ,
+  "tribe": {"type" : "region"},
+}
+}
