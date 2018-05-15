@@ -261,7 +261,7 @@ let rec generate_tribes regs attd scr =
     (id,{
       name = id;
       pop = popn;
-      food = popn;
+      food = truncate (r.climate *. float(popn));
       tools = 0;
       weps = 0;
       attd = begin
