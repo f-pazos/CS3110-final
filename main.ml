@@ -67,6 +67,7 @@ let print_tribe (s : state) t_str =
 
 (* [print_tribe s] prints the details of every tribe/region in state s*)
 let print_state s =
+  print_endline ("Turns: "^(string_of_int s.turns));
   let rec print_tribes_remaining t_list =
   match t_list with
   | [] -> ()
@@ -87,8 +88,8 @@ let rec play_game s =
   | View x -> print_tribe s x; play_game s
   | Save x ->
     begin
-      try write_state x s
-      with _ (*FileError*) -> print_endline "Failed to save the state.";
+      (try write_state x s
+      with _ (*FileError*) -> print_endline "Failed to save the state.");
       play_game s
     end
   | Quit -> regular_exit ()
