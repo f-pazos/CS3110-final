@@ -9,8 +9,6 @@ type start =
  | Filename of string
  | Params of int * int * int
 
-(*TODO: limit attitude to 0, 1, or 2*)
-
 exception Parsing_Error
 
 (* [parse_params_full str] is the command that represents player input [str]
@@ -99,14 +97,6 @@ let parse_filename str =
     then let filename = Str.string_after str 9 in Filename filename
   else let filename = str in Filename filename
 
- (* options for params:
-  * size _ attitude _ scarceness _
-  * s _ a _ s _
-  * _ _ _*)
- (* options for filename:
-  * file _
-  * filename _
-  * _*)
 let parse_start str =
   let str1 = String.lowercase_ascii str in
   if Str.string_match (Str.regexp

@@ -107,6 +107,8 @@ let rec play_game s =
   | Quit -> regular_exit ()
   with _ -> game_problem_exit ()
 
+(*[start_game start_command] determines whether the user wants to generate a state
+  or load a state file and does so, and then runs play_game*)
 let start_game start_command = match start_command with
   | Filename f ->
     begin

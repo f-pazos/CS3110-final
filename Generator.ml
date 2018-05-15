@@ -28,7 +28,6 @@ let adj_sides (p1, p2)  (p3, p4)  =
 (*****************************************************************************)
 type outline = {size: int; points : point array; sides : side array}
 
-(* TODO : test*)
 (* [neighbors o1 o2] Returns true if outlines [o1] and [o2] share at least
  * one side, but not all sides.  *)
 let neighbors o1 o2 =
@@ -65,14 +64,8 @@ let neighbors o1 o2 =
 (*****************************************************************************)
 type world = {size: int; regions: outline array}
 
-(* TODO 0 : rep_ok's *)
-let repok_outline out = ()
-let repok_world w = ()
-
-(*TODO t : test *)
 (* [polygon_of_outline out] creates a Graphics.polygon out of a given outline *)
 let polygon_of_outline out = out.points
-
 
 (* [outline_of_polygon poly] creates an outline of the Graphics.polygon poly. *)
 let outline_of_polygon poly =
@@ -89,7 +82,6 @@ let outline_of_polygon poly =
    points = poly;
    sides = new_sides}
 
-(*TODO : test [area_of_outline] and [len_border] *)
 (* [area_of_outline o] returns the area of outline o. *)
 (* Based on this method: https://web.archive.org/web/20100405070507/http://valis.cs.uiuc.edu/~sariel/research/CG/compgeom/msg00831.html *)
 let area_of_outline (o:outline) : float =
@@ -124,8 +116,6 @@ let len_border (out1:outline) (out2:outline) : float =
   Hashtbl.fold (fun (a,b) _ acc -> acc +. (distance a b)) shared_sides 0.0
 
 
-
-(*TODO : Test a few times. *)
 (* [generate_names n] randomly generates a list of [n] strings representing
  * the names of the regions *)
 let rec generate_names n : string array =
@@ -140,7 +130,7 @@ let rec generate_names n : string array =
 
   try
     let ic = open_in "tribe_names.txt" in
-    let names = read_names ic [] |> (List.map String.trim) |> Array.of_list in 
+    let names = read_names ic [] |> (List.map String.trim) |> Array.of_list in
 
 
     let result = Array.make n "" in
@@ -163,7 +153,6 @@ let rec generate_names n : string array =
   with _ -> failwith "Error reading tribe_names.txt"
 
 
-(* TODO : test *)
 (* [generate_neighbors out regs] finds the ids of all of out's neighbors.
  * Returns them in a string list.
  * - [names] : Association list of type (outline * string) list that
@@ -215,7 +204,7 @@ let generate_color () =
 
 
 (* [generate_regions n] Creates the regions object for the initial state. *)
-let generate_regions w h n scar : (string * State.region) list = 
+let generate_regions w h n scar : (string * State.region) list =
   (* Generate a map *)
   let m = generate_map w h n in
 
@@ -232,7 +221,7 @@ let generate_regions w h n scar : (string * State.region) list =
               { name = names.(i);
               area = int_of_float ((area_of_outline o)/.100.);
               climate = (float(scar)/.10.)+.0.8; (*TODO balance this*)
-              neighbors = generate_neighbors names o m; 
+              neighbors = generate_neighbors names o m;
               polygon = o.points;
               base_color = generate_color ()
               })::(!regs)
@@ -276,16 +265,15 @@ let rec generate_tribes regs attd scr =
   end
 
 (* [generate_state size attitude scarceness] Generates a starting state. *)
-let generate_state size attitude (scarceness:int) = 
+let generate_state size attitude (scarceness:int) =
   let regions_ = generate_regions 800 800 size scarceness in
-  let st0 = { 
+  let st0 = {
     regions = regions_;
     turns = 0;
     tribes = generate_tribes regions_ attitude scarceness
   } in
 
-
-  (* TODO remove in final version *)
+  (*debug functions*)
   let rec print_neighbors n = match n with
     | [] -> ()
     | (n, f)::t -> print_endline ("\t" ^ n ^ ", " ^ (string_of_float f)) ;
