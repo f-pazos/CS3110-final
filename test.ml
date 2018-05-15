@@ -71,6 +71,16 @@ let t3 = {
   opins = [("a",2)];
   reg = "c_reg";
 }
+let t3postgift3 = {
+  t3 with
+  food=29;
+}
+let t1postgift3 = {
+  t1 with
+  food= 101;
+  opins= [("c",3); ("b", 1)];
+}
+
 let t3postgift1 = {
   t3 with
   food= 42;
@@ -156,10 +166,24 @@ let tests =
   "gift 2" >:: (fun _ -> assert_equal t2postgift (List.assoc "b" (do_action s "a" (Gift ("b", 1))).tribes));
   "gift 3" >:: (fun _ -> assert_equal t1postgift1 (List.assoc "a" (do_action s "a" (Gift ("c", 2))).tribes));
   "gift 4" >:: (fun _ -> assert_equal t3postgift1 (List.assoc "c" (do_action s "a" (Gift ("c", 2))).tribes));
+  "gift 5" >:: (fun _ -> assert_equal t1postgift3 (List.assoc "a" (do_action s "c" (Gift ("a", 11))).tribes));
+  "gift 6" >:: (fun _ -> assert_equal t3postgift3 (List.assoc "c" (do_action s "c" (Gift ("a", 11))).tribes));
+  "attack1" >:: (fun _ -> assert_equal 1390 (List.assoc "a" (do_action s "a" (Attack "b")).tribes).food);
+  "attack2" >:: (fun _ -> assert_equal 0 (List.assoc "b" (do_action s "a" (Attack "b")).tribes).food);
+  "attack3" >:: (fun _ -> assert_equal 12 (List.assoc "a" (do_action s "a" (Attack "b")).tribes).weps);
+  "attack4" >:: (fun _ -> assert_equal 7 (List.assoc "b" (do_action s "a" (Attack "b")).tribes).weps);
+  "attack5" >:: (fun _ -> assert_equal [("a", -2)] (List.assoc "b" (do_action s "a" (Attack "b")).tribes).opins);
+  "attack6" >:: (fun _ -> assert_equal 1300 (List.assoc "a" (do_action s "c" (Attack "a")).tribes).food);
+  "attack7" >:: (fun _ -> assert_equal 40 (List.assoc "c" (do_action s "c" (Attack "a")).tribes).food);
+  "attack8" >:: (fun _ -> assert_equal 12 (List.assoc "a" (do_action s "c" (Attack "a")).tribes).weps);
+  "attack9" >:: (fun _ -> assert_equal 4 (List.assoc "c" (do_action s "c" (Attack "a")).tribes).weps);
+  "attack10" >:: (fun _ -> assert_equal [("c", -3);("b",1)] (List.assoc "a" (do_action s "c" (Attack "a")).tribes).opins);
+  "attack11" >:: (fun _ -> assert_equal 999 (List.assoc "a" (do_action s "c" (Attack "a")).tribes).pop);
+  "attack12" >:: (fun _ -> assert_equal 0 (List.assoc "c" (do_action s "c" (Attack "a")).tribes).pop);
 
   "decide 1" >:: (fun _ -> assert_equal Tools (decide s "a"));
   "decide 2" >:: (fun _ -> assert_equal Tools (decide s "b"));
-"decide 3" >:: (fun _ -> assert_equal (Gift("a",50)) (decide s "c"));
+  "decide 3" >:: (fun _ -> assert_equal (Gift("a",11)) (decide s "c"));
   "step 0" >:: (fun _ -> assert_equal s (step s 0));
 ]
 

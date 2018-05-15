@@ -3,7 +3,7 @@
  * Also, I'm not sure if this file is even necessary*)
 open State
 
-module type DISPLAY = sig
+(* module type DISPLAY = sig
   (* TODO Implement state so this can be removed. *)
   type state = string
 
@@ -24,7 +24,7 @@ module type DISPLAY = sig
 
   val display : world_map -> unit
 
-end (*Display*)
+end (*Display*) *)
 
 module type GENERATOR = sig
   val generate_state : int -> int -> int -> state
@@ -43,6 +43,8 @@ module type STATE = sig
     area : int;
     climate : float;
     neighbors : (string * float) list;
+    polygon : (int * int) array;
+    base_color : int;
   }
 
   type attd = Generous | Neutral | Aggressive
@@ -71,7 +73,7 @@ module type STATE = sig
 
 end (*state*)
 
-module CheckDisplay : DISPLAY = Display
-(* module CheckGenerator : GENERATOR = Generator
-module CheckMain : MAIN = Main *)
+(* module CheckDisplay : DISPLAY = Display *)
+module CheckGenerator : GENERATOR = Generator
+module CheckMain : MAIN = Main
 module CheckState : STATE = State

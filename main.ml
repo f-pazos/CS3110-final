@@ -7,18 +7,18 @@ open Command
 (* [file_problem_exit ()] prints that there is a problem with the state file
  * and exits*)
 let file_problem_exit () =
-  print_string "Sorry, there was a problem with the state file. Exiting the game.";
+  print_endline "Sorry, there was a problem with the state file. Exiting the game.";
   exit 0
 
 (* [game_problem_exit ()] prints that there is a problem with the game engine
  * and exits*)
 let game_problem_exit () =
-  print_string "Sorry, there was a problem with the game engine. Exiting the game.";
+  print_endline "Sorry, there was a problem with the game engine. Exiting the game.";
   exit 0
 
 (* [regular_exit ()] exits the game normally*)
 let regular_exit () =
-  print_string "Bye!";
+  print_endline "Bye!";
   exit 0
 
 (* [print_opinions op_list] prints all the tribe names and opinions in [op_list]*)
@@ -50,7 +50,7 @@ let print_region (s : state) r_str =
  * region in state [s]*)
 let print_tribe (s : state) t_str =
   let tribes_lower = List.map (fun (a, b) -> (String.lowercase_ascii a, b)) s.tribes in
-  try let t = List.assoc t_str tribes_lower in
+  try let t = List.assoc (String.lowercase_ascii t_str) tribes_lower in
   begin
     print_endline ("Name: "^t.name);
     print_endline ("Population: "^(string_of_int t.pop));
