@@ -38,6 +38,7 @@ let t1 = {
   attd = Neutral;
   opins = [("b", 1); ("c",2)];
   reg = "a_reg";
+  last_action = Food;
 }
 let t1postgift = { t1 with
   food = 1299;
@@ -56,6 +57,7 @@ let t2 = {
   attd = Generous;
   opins = [("a", 3)];
   reg = "b_reg";
+  last_action = Food;
 }
 let t2postgift = { t2 with
   food = 91;
@@ -70,6 +72,7 @@ let t3 = {
   attd= Generous;
   opins = [("a",2)];
   reg = "c_reg";
+  last_action = Food;
 }
 let t3postgift3 = {
   t3 with
@@ -108,6 +111,7 @@ let t3_metabolize = {
 let s = {
   regions = [("a", r1); ("b", r2);("c", r3)];
   tribes = [("a", t1); ("b", t2); ("c", t3)];
+  turns = 0;
 }
 
 let t1_metabolize = {t1 with
