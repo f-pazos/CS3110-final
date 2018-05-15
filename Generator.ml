@@ -2,6 +2,9 @@ open State
 open Graphics
 open Polygon_Generator
 
+let debug_generator = false
+
+
 (*****************************************************************************)
 (* POINT and related functions                                               *)
 (*****************************************************************************)
@@ -191,12 +194,26 @@ let generate_map w h n  =
   (* Create the outlines from polygons *)
   let outlines = generate_polys w h n |> Array.map (outline_of_polygon) in 
 
-  print_endline (string_of_int (Array.length outlines));
+  if debug_generator then print_endline (string_of_int (Array.length outlines))
+  else ();
   {size = Array.length outlines; regions = outlines}
 
 
 
-(*TODO : test *)
+(* [generate_color ()] Returns a random color for a region *)
+let generate_color () = 
+
+  (* Each channel is at least [a]. This ensures the color is light enough 
+   * to read easily *)
+  let a = 100 in 
+
+  let red = a + Random.int (256-a) in 
+  let green = a + Random.int (256-a) in 
+  let blue = a + Random.int (256-a)in 
+
+  blue + green*256 + red *256*256
+
+
 (* [generate_regions n] Creates the regions object for the initial state. *)
 let generate_regions w h n : (string * State.region) list = 
   (* Generate a map *)
@@ -217,7 +234,7 @@ let generate_regions w h n : (string * State.region) list =
               climate = Random.float 10.0; (*TODO balance this*)
               neighbors = generate_neighbors names o m; 
               polygon = o.points;
-              base_color = Random.int 0xFFFFFF
+              base_color = generate_color ()
               })::(!regs) 
   done;
   (!regs)
@@ -269,16 +286,16 @@ let generate_state size attitude scarceness =
   (* TODO remove in final version *)
   let rec print_neighbors n = match n with 
     | [] -> () 
-    | (n, f)::t -> print_string (n ^ ", ") ;
+    | (n, f)::t -> print_endline ("\t" ^ n ^ ", " ^ (string_of_float f)) ;
                    print_neighbors t in 
 
   let rec print_regs regs = match regs with 
     | [] -> ()
     | (n, r)::t -> 
-      print_string (n ^ ": ");
+      print_endline (n ^ ": " ^ (string_of_int r.area));
       print_neighbors r.neighbors;
       print_endline "";
       print_regs t in 
 
-  print_regs st0.regions; 
+  if debug_generator then print_regs st0.regions else (); 
   st0
