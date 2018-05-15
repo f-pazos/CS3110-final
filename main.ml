@@ -130,7 +130,7 @@ let main () =
   print_endline "Please enter the name of the game file you want to load,";
   print_endline "or enter the parameters for a new game as";
   print_endline "size _ attitude _ scarceness _";
-  print_endline "size is the number of tribes";
+  print_endline "size is the number of tribes (about 10-30)";
   print_endline "attitude is 0 for generous, 1 for neutral, and 2 for aggressive";
   print_endline "scarceness is a number between 0 and 10, where 0 is scarce and 10 is abundant";
   print_string  "> ";
