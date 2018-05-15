@@ -271,6 +271,7 @@ let rec generate_tribes regs attd scr =
       end;
       opins = generate_opins r.neighbors;
       reg = id;
+      last_action = Food;
     })::(generate_tribes tl attd scr)
   end
 
@@ -279,6 +280,7 @@ let generate_state size attitude scarceness =
   let regions_ = generate_regions 800 800 size in
   let st0 = { 
     regions = regions_;
+    turns = 0;
     tribes = generate_tribes regions_ attitude scarceness
   } in 
 

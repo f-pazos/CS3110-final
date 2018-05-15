@@ -9,6 +9,9 @@ type region = {
 
 type attd = Generous | Neutral | Aggressive
 
+(* The string in Attack is the target *)
+type action = Food | Tools | Weapons | Attack of string | Gift of (string * int)
+
 type tribe = {
   name : string;
   pop : int;
@@ -18,14 +21,13 @@ type tribe = {
   attd : attd;
   opins : (string * int) list;
   reg : string;
+  last_action : action;
 }
 type state = {
   regions : (string * region) list;
   tribes : (string * tribe) list;
+  turns : int;
 }
-
-(* The string in Attack is the target *)
-type action = Food | Tools | Weapons | Attack of string | Gift of (string * int)
 
 (* [decide s name] is the [action] that tribe with name [name] will do, given
  * the state [s] of the simulation. The action the results is that which has 
