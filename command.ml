@@ -9,6 +9,8 @@ type start =
  | Filename of string
  | Params of int * int * int
 
+(*TODO: limit attitude to 0, 1, or 2*)
+
 exception Parsing_Error
 
 (* [parse_params_full str] is the command that represents player input [str]

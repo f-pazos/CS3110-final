@@ -2,7 +2,7 @@ open Graphics
 open State
 
 
-let win_w = 1000
+let win_w = 1100
 let win_h = 800
 
 (* TODO: Implement alter_color *)
@@ -47,19 +47,23 @@ let display (st:state) =
       poly_helper t
     end in
 
-  let rec tribe_helper tribes y = match tribes with
+  let rec tribe_helper tribes regs y = match tribes with
     | [] -> ()
     | (n,tr)::tl -> begin
-      set_color black;
-      moveto 820 y;
+      let r = (List.assoc n regs) in
+      moveto (win_h + 20) y;
       draw_string n;
-      moveto 840 (y-15);
-      let s1 = "Pop: "^(string_of_int tr.pop)^" | Food: "^(string_of_int tr.food) in
-      draw_string s1;
-      moveto 840 (y-30);
-      let s2 = "Tools: "^(string_of_int tr.tools)^" | Weapons: "^(string_of_int tr.weps) in
-      draw_string s2;
-      tribe_helper tl (y-40)
+      let (currX, currY) = current_point () in 
+      set_color r.base_color; 
+      fill_rect (win_h + 15) (y-2) (currX - (win_h + 10)) 14;
+      set_color black;
+      draw_rect (win_h + 15) (y-2) (currX - (win_h + 10)) 14;
+      moveto (win_h + 20) y;
+      draw_string n;
+      moveto (win_h + 40) (y-20);
+      let s = "Pop:"^(string_of_int tr.pop)^" | Food:"^(string_of_int tr.food)^" | Tools:"^(string_of_int tr.tools)^" | Weapons:"^(string_of_int tr.weps) in
+      draw_string s;
+      tribe_helper tl regs (y-40)
     end in
 
   let rec draw_overlay regs = match regs with 
@@ -85,7 +89,7 @@ let display (st:state) =
 
   set_color black;
   poly_helper st.regions;
-  tribe_helper st.tribes 780;
+  tribe_helper st.tribes st.regions (win_h-10);
   draw_overlay st.regions
 
 
