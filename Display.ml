@@ -1,5 +1,7 @@
 open Graphics
 open State
+open Generator
+
 
 let win_w = 1000
 let win_h = 800
@@ -13,7 +15,21 @@ let display_init () =
   open_graph ""; 
   resize_window win_w win_h;
   ()
+(*
+(* [com o] Returns the center of mass of an outline [o] as an (int*int) *)
+let com (o:outline): (int*int)= 
 
+  (* Find the sum of x and y values of outline o. *)
+  let x_sum = ref 0 in 
+  let y_sum = ref 0 in 
+
+  for i = 0 to o.size-1 do 
+    x_sum := (!x_sum) + fst (o.points.(i));
+    y_sum := (!y_sum) + snd (o.points.(i))
+  done;
+
+  ( (!x_sum) / o.size, (!y_sum) / o.size)
+*)
 
 (* [display st] provides a graphic representation for [st]. *)
 let display st = 
