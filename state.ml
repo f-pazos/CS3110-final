@@ -150,8 +150,8 @@ let do_attack s t a_name =
     (float(t.pop + t_popwithweps)/. float(x.pop + x_popwithweps)) *.
       (float((Random.int 50) + 40)/.100.) in
   let x_success = (1./.t_success) in
-  let xpop' = min 0 (truncate (float(x.pop) -. float(tforce) *. t_success)) in
-  let tpop' = min 0 (truncate (float(t.pop) -. float(xforce) *. x_success)) in
+  let xpop' = min 0 (truncate (float(x.pop) -. float(t_popwithweps) *. t_success)) in
+  let tpop' = min 0 (truncate (float(t.pop) -. float(x_popwithweps) *. x_success)) in
   let food_stolen = min x.food (truncate(float(t.pop) *. t_success)) in
   let tfood' = t.food + food_stolen in
   let xfood' = x.food - food_stolen in
