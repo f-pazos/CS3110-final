@@ -231,7 +231,7 @@ let generate_regions w h n scar : (string * State.region) list =
     regs := ( names.(i),
               { name = names.(i);
               area = int_of_float ((area_of_outline o)/.100.);
-              climate = (Random.float 1.0)+.0.8; (*TODO balance this*)
+              climate = (float(scar)/.10.)+.0.8; (*TODO balance this*)
               neighbors = generate_neighbors names o m; 
               polygon = o.points;
               base_color = generate_color ()
@@ -276,7 +276,7 @@ let rec generate_tribes regs attd scr =
   end
 
 (* [generate_state size attitude scarceness] Generates a starting state. *)
-let generate_state size attitude scarceness = 
+let generate_state size attitude (scarceness:int) = 
   let regions_ = generate_regions 800 800 size scarceness in
   let st0 = { 
     regions = regions_;
