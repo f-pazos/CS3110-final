@@ -91,7 +91,7 @@ let json_of_tribe (t : tribe) : Yojson.Basic.json =
    represents a state *)
 let state_of_json j = {
   regions = pair_map to_string "name" region_of_json "region" (to_list (member "regions" j));
-  tribes = pair_map to_string "name" tribe_of_json "tribe" (to_list (member "tribe" j));
+  tribes = pair_map to_string "name" tribe_of_json "tribe" (to_list (member "tribes" j));
 }
 
 (* [json_of_state s] creates a json object representing [s] *)
@@ -104,7 +104,7 @@ let json_of_state (s:state) : Yojson.Basic.json =
 
 let read_state filename =
   let j = try Yojson.Basic.from_file filename with _ -> failwith "file error" in
-  try state_of_json j with _ -> failwith "file error"
+  state_of_json j
 
 let write_state filename s =
   Yojson.Basic.to_file filename (json_of_state s)
