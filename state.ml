@@ -78,6 +78,7 @@ let decide s name =
   let r = assoc name s.regions in
   let food_des =
     let food_mult = if t.food < t.pop then 3 else 1 in
+    if t.food = 0 then 1 else
     truncate (float ((t.pop/t.food) * (food_mult)) *. r.climate)
   in
   let tools_des =
@@ -86,7 +87,9 @@ let decide s name =
   in
   let weps_des =
     if t.weps > t.pop then 0
-    else ((t.pop/t.weps)/2) * (if t.attd = Aggressive then 2 else 1)
+    else
+    if t.weps=0 then (t.pop/2) * (if t.attd = Aggressive then 2 else 1)
+    else((t.pop/t.weps)/2) * (if t.attd = Aggressive then 2 else 1)
   in
   let attack_des =
     let lowest = min_opin t.opins 100 in
@@ -247,7 +250,8 @@ let metabolize t:tribe =
 let rec do_all s trs =
     match trs with
     | [] -> s
-    | (id,tr)::tl -> do_all (do_action s id (decide s id) ) tl
+    | (id,tr)::tl -> if tr.pop=0 then do_all s tl
+      else do_all (do_action s id (decide s id) ) tl
 
 (* [metbl_all s trs] is the state after all the tribes in [trs] have
  * metabolized once, starting from state [s] *)

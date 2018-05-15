@@ -23,7 +23,7 @@ let int_of_attd x = match x with
 
 (* [region_of_json j] creates a region object from the JSON object [j] that
    represents a region *)
-let region_of_json j = {
+let region_of_json j : region = {
   name = to_string (member "name" j);
   area = to_int (member "area" j);
   climate = to_number (member "climate" j);
@@ -54,7 +54,7 @@ let json_of_region (r : region) : Yojson.Basic.json =
 
 (* [tribe_of_json j] creates a tribe object from the JSON object [j] that
    represents a tribe *)
-let tribe_of_json j = {
+let tribe_of_json j : tribe = {
   name = to_string (member "name" j);
   pop = to_int (member "pop" j);
   food = to_int (member "food" j);
@@ -63,6 +63,7 @@ let tribe_of_json j = {
   attd = attd_of_int (to_int (member "attd" j));
   opins = pair_map to_string "name" to_int "op" (to_list (member "opins" j));
   reg = to_string (member "reg" j);
+  last_action = Food;
   }
 
 (* [json_of_tribe t] creates a json object representing [t] *)
@@ -89,9 +90,10 @@ let json_of_tribe (t : tribe) : Yojson.Basic.json =
 
 (* [state_of_json j] creates a state object from the JSON object [j] that
    represents a state *)
-let state_of_json j = {
+let state_of_json j : state = {
   regions = pair_map to_string "name" region_of_json "region" (to_list (member "regions" j));
   tribes = pair_map to_string "name" tribe_of_json "tribe" (to_list (member "tribes" j));
+  turns = to_int (member "turns" j);
 }
 
 (* [json_of_state s] creates a json object representing [s] *)
@@ -100,7 +102,7 @@ let json_of_state (s:state) : Yojson.Basic.json =
     ("region", json_of_region r)]) s.regions) in
   let tribes_json = `List (List.map (fun (name, t) -> `Assoc [("name", `String name);
     ("tribe", json_of_tribe t)]) s.tribes) in
-  `Assoc [("regions", regions_json); ("tribes", tribes_json)]
+  `Assoc [("regions", regions_json); ("tribes", tribes_json); ("turns", `Int s.turns)]
 
 let read_state filename =
   let j = try Yojson.Basic.from_file filename with _ -> failwith "file error" in

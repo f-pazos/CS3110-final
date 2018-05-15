@@ -16,6 +16,9 @@ type region = {
 
 type attd = Generous | Neutral | Aggressive
 
+(* The string in Attack is the target *)
+type action = Food | Tools | Weapons | Attack of string | Gift of (string * int)
+
 type tribe = {
   name : string;
   pop : int;
@@ -25,14 +28,15 @@ type tribe = {
   attd : attd;
   opins : (string * int) list;
   reg : string;
+  last_action : action;
 }
 type state = {
   regions : (string * region) list;
   tribes : (string * tribe) list;
+  turns : int;
 }
 
-(* The string in Attack is the target *)
-type action = Food | Tools | Weapons | Attack of string | Gift of (string * int)
+
 
 (* [min_opin o] is the lowest int opinion of the opins list [o] or the base
  * int [i] *)
@@ -74,6 +78,7 @@ let decide s name =
   let r = assoc name s.regions in
   let food_des =
     let food_mult = if t.food < t.pop then 3 else 1 in
+    if t.food = 0 then 1 else
     truncate (float ((t.pop/t.food) * (food_mult)) *. r.climate)
   in
   let tools_des =
@@ -82,7 +87,9 @@ let decide s name =
   in
   let weps_des =
     if t.weps > t.pop then 0
-    else ((t.pop/t.weps)/2) * (if t.attd = Aggressive then 2 else 1)
+    else
+    if t.weps=0 then (t.pop/2) * (if t.attd = Aggressive then 2 else 1)
+    else((t.pop/t.weps)/2) * (if t.attd = Aggressive then 2 else 1)
   in
   let attack_des =
     let lowest = min_opin t.opins 100 in
@@ -203,7 +210,8 @@ let do_gift s t name (i:int) =
  * increases by 1 for every item of food given, with a base of 1
  *)
 let do_action s name a =
-  let t = assoc name s.tribes in
+  let t_ = assoc name s.tribes in
+  let t = {t_ with last_action = a} in
   let r = assoc name s.regions in
   let popwtools = min t.tools t.pop in
   match a with
@@ -242,7 +250,8 @@ let metabolize t:tribe =
 let rec do_all s trs =
     match trs with
     | [] -> s
-    | (id,tr)::tl -> do_all (do_action s id (decide s id) ) tl
+    | (id,tr)::tl -> if tr.pop=0 then do_all s tl
+      else do_all (do_action s id (decide s id) ) tl
 
 (* [metbl_all s trs] is the state after all the tribes in [trs] have
  * metabolized once, starting from state [s] *)
@@ -261,4 +270,4 @@ let rec step s i =
   else
     let done_all = do_all s s.tribes in
     let met_all = metbl_all done_all done_all.tribes in
-    step met_all (i - 1)
+    step {met_all with turns = (s.turns + 1)} (i - 1)
