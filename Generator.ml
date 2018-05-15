@@ -232,7 +232,7 @@ let rec generate_opins nbrs =
 (* [generate_tribes regs] Creates the tribes for a given map regs. *)
 let rec generate_tribes regs attd scr =
   match regs with
-  | [] -> ()
+  | [] -> []
   | (id,r)::tl -> begin
     let popn = (Random.int 100) + 20 in
     let rand = Random.int 100 in
@@ -241,8 +241,8 @@ let rec generate_tribes regs attd scr =
       else if rand > 80 then (attd + 1)
       else attd
       end in
-    {
-      name = td;
+    (id,{
+      name = id;
       pop = popn;
       food = popn;
       tools = 0;
@@ -251,17 +251,18 @@ let rec generate_tribes regs attd scr =
         if ((attd_ = 0) || (attd_ = 3)) then Generous
         else if (attd_ = 1) then Neutral
         else Aggressive
-      end
+      end;
       opins = generate_opins r.neighbors;
       reg = id;
-    }::(generate_tribes tl attd scr)
+    })::(generate_tribes tl attd scr)
   end
 
 (* [generate_state size attitude scarceness] Generates a starting state. *)
 let generate_state size attitude scarceness = 
+  let regions_ = generate_regions 800 800 size in
   let st0 = { 
-    regions = generate_regions 800 800 size;
-    tribes = generate_tribes regions attitude scarceness
+    regions = regions_;
+    tribes = generate_tribes regions_ attitude scarceness
   } in 
 
 
