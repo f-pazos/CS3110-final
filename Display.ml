@@ -236,13 +236,17 @@ let draw_gift_icon x y w =
 (* Draws an arros from [r1] to [r2] in color [c]. Uses [st] to find 
  * coordinates, etc. *)
 let draw_arrow c r1 r2 st = 
+
+  set_color c; 
+
   let (x1, y1) = com (List.assoc r1 st.regions).polygon in
   let (x2, y2) = com (List.assoc r2 st.regions).polygon in 
 
   set_line_width 10;
   moveto x1 y1;
   lineto x2 y2;
-                 
+  set_line_width 1;
+  fill_circle x2 y2 40;
   ()
   
   
@@ -357,10 +361,37 @@ let display (st:state) =
     let (legW, legH) = text_size "Legend" in 
 
     moveto (x_off + ((300-legW)/2)) 750;
-    draw_string "Legend" in 
+    draw_string "Legend";
+
+    draw_food_icon (x_off + 50) 650 50;
+    moveto (x_off + 110) 670; 
+    draw_string "Food production";
+
+    draw_tool_icon (x_off + 50) 550 50;
+    moveto (x_off + 110) 570; 
+    draw_string "Tool production";
+
+    draw_weapon_icon (x_off + 50) 450 50;
+    moveto (x_off + 110) 470; 
+    draw_string "Weapon production";
+
+    draw_attack_icon (x_off + 50) 350 50;
+    moveto (x_off + 110) 370; 
+    draw_string "Attack";
+
+
+    draw_gift_icon (x_off + 50) 250 50 ;
+    moveto (x_off + 110) 270; 
+    draw_string "Gift" in 
 
   set_color black;
   poly_helper st.regions;
+
+  (* Refresh tribe info area *)
+  set_color white;
+  fill_rect 800 0 300 800;
+  set_color black;
+  draw_rect 800 0 300 800;
   tribe_helper st.tribes st.regions (win_h-10);
   draw_arrows st.regions st;
   draw_icons st.regions st;
