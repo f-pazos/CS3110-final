@@ -17,7 +17,7 @@ let display_init () =
 
 (* [display st] provides a graphic representation for [st]. *)
 let display st = 
-  let rec display_helper regs = match regs with 
+  let rec display_helper regs text_y = match regs with 
     | [] -> ()
     | (_, h)::t -> begin
                 print_endline (string_of_int (h.base_color));
@@ -26,11 +26,13 @@ let display st =
                 fill_poly h.polygon;
                 set_color black;
                 draw_poly h.polygon;
-                display_helper t
+                moveto 820 text_y;
+                draw_string h.name;
+                display_helper t (text_y - 30)
               end in 
 
   set_color black;
-  display_helper st.regions
+  display_helper st.regions 770
 
 
   
