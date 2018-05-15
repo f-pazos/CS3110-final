@@ -73,7 +73,7 @@ let decide s name =
   let t = assoc name s.tribes in
   let r = assoc name s.regions in
   let food_des =
-    let food_mult = if t.food < t.pop then 2 else 1 in
+    let food_mult = if t.food < t.pop then 3 else 1 in
     truncate (float ((t.pop/t.food) * (food_mult)) *. r.climate)
   in
   let tools_des =
@@ -87,12 +87,12 @@ let decide s name =
   let attack_des =
     let lowest = min_opin t.opins 100 in
     if lowest > 0 then 0 else
-      (abs (lowest)) * (if t.attd = Aggressive then 2 else 1)
+      (abs (lowest)) * (t.weps/t.pop) * (if t.attd = Aggressive then 2 else 1)
   in
   let gift_des =
     let highest = max_opin t.opins (-100) in
     if highest < 0 then 0 else
-      highest * (if t.attd = Generous then 2 else 1)
+      (highest/2) * (if t.attd = Generous then 2 else 1)
   in
   let most = list_max (food_des::tools_des::weps_des::attack_des::[]) gift_des in
   if most = food_des then
@@ -103,8 +103,10 @@ let decide s name =
     Weapons
   else if most = attack_des then
     Attack(most_hated t.opins)
-  else
-    Gift((most_liked t.opins),50) (* 50 is a placeholder here *)
+  else begin
+    let food_gift = min 0 ((t.food - t.pop)/3) in
+    Gift((most_liked t.opins),food_gift)
+  end
 
 (* [do_food s t r popwtools] is [do_action s name Food] where tribe with name
  * [name] is [t] and occupies region [r]
@@ -169,7 +171,7 @@ let do_attack s t a_name =
  * with the name [name] *)
 let do_gift s t name (i:int) =
   let x = assoc name s.tribes in
-  let add_factor = max 1 (i/5) in
+  let add_factor = max 1 (i/10) in
   let newopin =
     (t.name, (assoc t.name x.opins) + add_factor ) in
   let xopins' = newopin::(remove_assoc t.name x.opins) in
@@ -242,7 +244,7 @@ let rec do_all s trs =
     | [] -> s
     | (id,tr)::tl -> do_all (do_action s id (decide s id) ) tl
 
-(* [do_all s trs] is the state after all the tribes in [trs] have
+(* [metbl_all s trs] is the state after all the tribes in [trs] have
  * metabolized once, starting from state [s] *)
 let rec metbl_all s trs =
   match trs with
