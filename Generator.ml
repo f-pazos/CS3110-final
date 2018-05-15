@@ -215,7 +215,7 @@ let generate_color () =
 
 
 (* [generate_regions n] Creates the regions object for the initial state. *)
-let generate_regions w h n : (string * State.region) list = 
+let generate_regions w h n scar : (string * State.region) list = 
   (* Generate a map *)
   let m = generate_map w h n in
 
@@ -231,7 +231,7 @@ let generate_regions w h n : (string * State.region) list =
     regs := ( names.(i), 
               { name = names.(i);
               area = int_of_float (area_of_outline o);
-              climate = Random.float 10.0; (*TODO balance this*)
+              climate = (Random.float 1.0)+.0.8; (*TODO balance this*)
               neighbors = generate_neighbors names o m; 
               polygon = o.points;
               base_color = generate_color ()
@@ -277,7 +277,7 @@ let rec generate_tribes regs attd scr =
 
 (* [generate_state size attitude scarceness] Generates a starting state. *)
 let generate_state size attitude scarceness = 
-  let regions_ = generate_regions 800 800 size in
+  let regions_ = generate_regions 800 800 size scarceness in
   let st0 = { 
     regions = regions_;
     turns = 0;
