@@ -40,13 +40,6 @@ let t1 = {
   reg = "a_reg";
   last_action = Food;
 }
-let t1postgift = { t1 with
-  food = 1299;
-                 }
-let t1postgift1 = {
-  t1 with
-  food = 1298
-}
 
 let t2 = {
   name = "b";
@@ -59,10 +52,7 @@ let t2 = {
   reg = "b_reg";
   last_action = Food;
 }
-let t2postgift = { t2 with
-  food = 91;
-  opins = [("a", 4)];
-                 }
+
 let t3 = {
   name = "c";
   pop = 5;
@@ -74,37 +64,42 @@ let t3 = {
   reg = "c_reg";
   last_action = Food;
 }
-let t3postgift3 = {
-  t3 with
+let t1postgift = { t1 with
+  food = 1299;
+}
+let t1postgift1 = {t1 with
+    food = 1298
+}
+let t2postgift = {t2 with
+  food = 91;
+  opins = [("a", 4)];
+}
+
+let t3postgift3 = {t3 with
   food=29;
 }
-let t1postgift3 = {
-  t1 with
+let t1postgift3 = {t1 with
   food= 101;
   opins= [("c",3); ("b", 1)];
 }
 
-let t3postgift1 = {
-  t3 with
+let t3postgift1 = {t3 with
   food= 42;
   opins = [("a",3)]
 }
-let t3_weapons = {
-  t3 with
+let t3_weapons = {t3 with
   weps=11;
   tools=9;
 }
-let t3_tools = {
-  t3 with
+let t3_tools = {t3 with
   tools=12;
 }
-let t3_food = { t3 with
+let t3_food = {t3 with
   food= 127;
   tools=9;
 }
 
-let t3_metabolize = {
-  t3 with
+let t3_metabolize = {t3 with
   pop = 16;
   food= 35;
 }
@@ -135,7 +130,7 @@ tools = 6;
 }
 
 let t1_tools = {t1 with
-tools = 510
+tools = 510;
 }
 
 let t2_tools = {t2 with

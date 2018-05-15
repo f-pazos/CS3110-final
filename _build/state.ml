@@ -78,23 +78,20 @@ let decide s name =
   let r = assoc name s.regions in
   let food_des =
     let food_mult = if t.food < t.pop then 3 else 1 in
-    if t.food = 0 then 1 else
-    truncate (float ((t.pop/t.food) * (food_mult)) *. r.climate)
+    truncate (float ((t.pop/(max 1 t.food)) * (food_mult)) *. r.climate)
   in
   let tools_des =
     if t.tools > t.pop then 0
-    else t.pop/t.tools
+    else t.pop/(max 1 t.tools)
   in
   let weps_des =
     if t.weps > t.pop then 0
-    else
-    if t.weps=0 then (t.pop/2) * (if t.attd = Aggressive then 2 else 1)
-    else((t.pop/t.weps)/2) * (if t.attd = Aggressive then 2 else 1)
+    else ((t.pop/(max 1 t.weps))/2) * (if t.attd = Aggressive then 2 else 1)
   in
   let attack_des =
     let lowest = min_opin t.opins 100 in
     if lowest > 0 then 0 else
-      (abs (lowest)) * (t.weps/t.pop) * (if t.attd = Aggressive then 2 else 1)
+      (abs (lowest)) * (t.weps/(max 1 t.pop)) * (if t.attd = Aggressive then 2 else 1)
   in
   let gift_des =
     let highest = max_opin t.opins (-100) in
@@ -102,7 +99,7 @@ let decide s name =
       (highest/2) * (if t.attd = Generous then 2 else 1)
   in
   let most = list_max (food_des::tools_des::weps_des::attack_des::[]) gift_des in
-  if most = food_des then
+  if ((most = food_des) || (t.pop = 0)) then
     Food
   else if most = tools_des then
     Tools
@@ -153,9 +150,9 @@ let do_attack s t a_name =
   let x = assoc a_name s.tribes in
   let t_popwithweps = min t.pop t.weps in
   let x_popwithweps = min x.pop x.weps in
-  let t_success =
-    (float(t.pop + t_popwithweps)/. float(x.pop + x_popwithweps)) *.
-      (float((Random.int 50) + 40)/.100.) in
+  let tforce = float(max 1 (t.pop + t_popwithweps)) in
+  let xforce = float(max 1 (x.pop + x_popwithweps)) in
+  let t_success = (tforce/.xforce) *. (float((Random.int 50) + 40)/.100.) in
   let x_success = (1./.t_success) in
   let xpop' = max 0 (truncate (float(x.pop) -. float(t_popwithweps) *. t_success)) in
   let tpop' = max 0 (truncate (float(t.pop) -. float(x_popwithweps) *. x_success)) in
