@@ -10,6 +10,7 @@ type region = {
   area : int;
   climate : float;
   neighbors : (string * float) list;
+  polygon : (int * int) array
 }
 
 type attd = Generous | Neutral | Aggressive
