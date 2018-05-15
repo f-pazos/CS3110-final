@@ -66,9 +66,9 @@ let most_hated o =
 let most_liked o =
   fst (find (fun x -> snd x = (max_opin o (-100))) o)
 
-(* [decide s name] is the [action] that tribe with name [name] will do, given the state [s] of
- * the simulation. The action the results is that which has the highest
- * "desireability" to the tribe *)
+(* [decide s name] is the [action] that tribe with name [name] will do, given
+ * the state [s] of the simulation. The action the results is that which has 
+ * the highest "desireability" to the tribe *)
 let decide s name =
   let t = assoc name s.tribes in
   let r = assoc name s.regions in
@@ -120,17 +120,15 @@ let do_food s t r popwtools =
   let tribes' = (t.name, t')::(remove_assoc t.name s.tribes) in
   {s with tribes = tribes'}
 
-(* [do_tools s t popwtools] is [do_action s name Tools] where tribe with name
+(* [do_tools s t] is [do_action s name Tools] where tribe with name
  * [name] is [t]
- * popwtools is min(t.pop, t.tools)*)
-(* formula: tools increases by floor(pop/2) *)
-let do_tools s t popwtools =
+ * formula: tools increases by floor(pop/2) *)
+let do_tools s t  =
   let t' = {t with tools = (t.tools + (t.pop/2))} in
   let tribes' = (t.name, t')::(remove_assoc t.name s.tribes) in
   {s with tribes = tribes'}
 
-(* [do_weapons s t popwtools] is [do_action s name Weapons] where tribe with name
- * [name] is [t]
+(* [do_weapons s t popwtools] is the state after 
  * popwtools is min(t.pop, t.tools)*)
 (* formula: weapons increases by floor(popwtools/2), tools decreases by floor(popwtools/3) *)
 let do_weapons s t popwtools =
@@ -140,22 +138,18 @@ let do_weapons s t popwtools =
   let tribes' = (t.name, t')::(remove_assoc t.name s.tribes) in
   {s with tribes = tribes'}
 
-(* [do_attack is t popwtools a_name] is [do_action s name (Attack a_name)] where tribe with name
- * [name] is [t]
- * popwtools is min(t.pop, t.tools)*)
-(* formula: TODO*)
-let do_attack s t popwtools a_name =
+(* [do_attack s t a_name] is the state [s] after tribe [t] has attacked the
+ * tribe with the name [a_name] *)
+let do_attack s t a_name =
   let x = assoc a_name s.tribes in
   let t_popwithweps = min t.pop t.weps in
   let x_popwithweps = min x.pop x.weps in
-  let tforce = t.pop + t_popwithweps in
-  let xforce = x.pop + x_popwithweps in
   let t_success =
     (float(t.pop + t_popwithweps)/. float(x.pop + x_popwithweps)) *.
-      (float((Random.int 80) + 70)/.150.) -. 0.15 in
+      (float((Random.int 50) + 40)/.100.) in
   let x_success = (1./.t_success) in
-  let xpop' = truncate (float(x.pop) -. float(tforce) *. t_success) in
-  let tpop' = truncate (float(t.pop) -. float(xforce) *. x_success) in
+  let xpop' = min 0 (truncate (float(x.pop) -. float(tforce) *. t_success)) in
+  let tpop' = min 0 (truncate (float(t.pop) -. float(xforce) *. x_success)) in
   let food_stolen = min x.food (truncate(float(t.pop) *. t_success)) in
   let tfood' = t.food + food_stolen in
   let xfood' = x.food - food_stolen in
@@ -171,12 +165,10 @@ let do_attack s t popwtools a_name =
   let tribes'' = (x.name, x')::(remove_assoc x.name tribes') in
   {s with tribes = tribes''}
 
-(* [do_gift s t popwtools n i] is [do_action s name (Gift (n,i))] where tribe with name
- * [name] is [t]
- * popwtools is min(t.pop, t.tools)*)
-(* formula: TODO*)
-let do_gift s t popwtools n (i:int) =
-  let x = assoc n s.tribes in
+(* [do_gift s t n i] is state [s] after tribe [t] gives [i] food to the tribe
+ * with the name [name] *)
+let do_gift s t name (i:int) =
+  let x = assoc name s.tribes in
   let add_factor = max 1 (i/5) in
   let newopin =
     (t.name, (assoc t.name x.opins) + add_factor ) in
@@ -211,13 +203,13 @@ let do_gift s t popwtools n (i:int) =
 let do_action s name a =
   let t = assoc name s.tribes in
   let r = assoc name s.regions in
-  let popwtools = if t.tools > t.pop then t.pop else t.tools in
+  let popwtools = min t.tools t.pop in
   match a with
   | Food -> do_food s t r popwtools
-  | Tools -> do_tools s t popwtools
+  | Tools -> do_tools s t
   | Weapons -> do_weapons s t popwtools
-  | Attack(a_name) -> do_attack s t popwtools a_name
-  | Gift(x, i) -> do_gift s t popwtools x i
+  | Attack(a_name) -> do_attack s t a_name
+  | Gift(n, i) -> do_gift s t n i
 
 
 (* [metabolize t] is the tribe [t] after the application of its metabolism
@@ -229,8 +221,6 @@ let do_action s name a =
  * - food cannot be negative
  * - pop increases by 1 for every 3 foods over the necessary
  * - pop decreases by 1 for every 3 foods under the necessary
- * #EXTRA: This would be the function where we could add random events like
- * Storm or disease
  *)
 let metabolize t:tribe =
   let food' =
